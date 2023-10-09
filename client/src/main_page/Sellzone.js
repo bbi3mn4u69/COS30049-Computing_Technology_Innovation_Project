@@ -1,31 +1,36 @@
 import { React, useState } from "react";
+import  Axios  from "axios";
+import { toast } from "react-toastify";
+import { useAuth } from "../context/context";
 
 function SellZone() {
+const [empty, setEmpty] = useState("")
+const url = "http://localhost:3002/api/usertrade";
+const [sellPrice, setSellPrice] = useState("");
+const {username, setUserName} = useAuth();
+const [sellAmount, setSellAmount] = useState("");
+const tradeType = "SELL";
 
-   // reserved for build backend.................................................
-   const [inputArr, setInputArr] = useState([]);
-   const [inputData, setInputData] = useState({
-     amount: [],
-     price: [],
-   });
-   function changeHandle(e) {
-     setInputData({ ...inputData, [e.target.name]: e.target.value });
-   }
- 
-   let { amount, price } = inputData;
-   
-   function buttonHandle() {
-     if (inputData.amount != "" && inputData.price != "" ) {
-       setInputArr([...inputArr, { amount, price }]);
-     }
-     // clear input data after inputed
-     inputData.amount = "";
-     inputData.price = "";
- 
-   }
-   
-   localStorage.setItem("sell_data", JSON.stringify(inputArr));
-   // .................................................
+const buttonHandle = () => {
+  if (sellPrice !== null && sellAmount !== null) {
+    Axios.post(url, {Price: sellPrice, Amount: sellAmount, tradeType: tradeType, username: username})
+    .then((response) => {
+      if (response.data.success === true) {
+        toast.success('order place successful!', {
+          position: 'top-right',
+          autoClose: 3000,
+        })
+      }else {
+        toast.success('order has fail!', {
+          position: 'top-right',
+          autoClose: 3000,
+        })
+      }
+    })
+    setEmpty("")
+  }
+}
+
   return (
     <div className="md:p-0 md:m-0 col-span-4 sm:col-span-6 ">
       {/* amount */}
@@ -33,8 +38,8 @@ function SellZone() {
         {/* <div className="text-white font-bold text-3xl uppercase">amount</div> */}
         <div>
           <input
-            onChange={changeHandle}
-            value={inputData.amount}
+            onChange={(e) => {setSellAmount(e.target.value)}}
+            // value={empty}
             name="amount"
             type="number"
             pattern="[0-9]*"
@@ -49,8 +54,8 @@ function SellZone() {
         {/* <div className="text-white font-bold text-3xl uppercase">price</div> */}
         <div>
           <input
-            onChange={changeHandle}
-            value={inputData.price}
+            onChange={(e) => {setSellPrice(e.target.value)}}
+            // value={empty}
             name="price"
             type="number"
             pattern="[0-9]*"

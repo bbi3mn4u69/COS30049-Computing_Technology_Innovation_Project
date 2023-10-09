@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/context";
 import { AuthProvider } from "../context/context";
 
-
-
-
 function Login() {
   const { isLogin, setIslogin } = useAuth()
   if(isLogin == true) {
@@ -13,9 +10,10 @@ function Login() {
       <li>
       <Link
         to="../home_page/Home"
-        className="block p-0 text-gray-500 bg-slate-200 border-0 hover:text-yellow-600"
-      >
-        Log Out
+      > 
+      <button onClick={() => {setIslogin(false)}} className="block p-0 text-gray-500 bg-slate-200 border-0 hover:text-yellow-600" >
+          Log Out
+      </button>        
       </Link>
   </li> 
     );

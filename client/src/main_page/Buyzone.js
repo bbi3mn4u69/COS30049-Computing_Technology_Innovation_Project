@@ -1,32 +1,38 @@
 import React, { useState } from "react";
+import Axios  from "axios";
+import { toast } from "react-toastify";
+import { useAuth } from "../context/context";
+
 
 function BuyZone() {
 
+  const url = "http://localhost:3002/api/usertrade";
+  const [empty, setEmpty] = useState("");
+  const {username, setUserName} = useAuth();
+  const [buyPrice, setBuyPrice] = useState ("");
+  const [buyAmount, setBuyAmount] = useState ("");
+  const tradeType = "BUY";
 
-  // reserved for build backend.................................................
-  const [inputArr, setInputArr] = useState([]);
-  const [inputData, setInputData] = useState({
-    amount: [],
-    price: [],
-  });
-  function changeHandle(e) {
-    setInputData({ ...inputData, [e.target.name]: e.target.value });
-  }
-
-  let { amount, price } = inputData;
-  
-  function buttonHandle() {
-    if (inputData.amount != "" && inputData.price != "" ) {
-      setInputArr([...inputArr, { amount, price }]);
+  const buttonHandle = () => {
+    if (buyPrice !== null && buyAmount !== null) {
+      Axios.post(url, {Price: buyPrice, Amount: buyAmount, tradeType:tradeType, username: username}).
+      then((response) => {
+        if (response.data.success === true) {
+          toast.success('order place successful!', {
+            position: 'top-right',
+            autoClose: 3000,
+          })
+        }else {
+          toast.success('order has fail!', {
+            position: 'top-right',
+            autoClose: 3000,
+          })
+        }
+      })
+      setEmpty("")
     }
-    // clear input data after inputed
-    inputData.amount = "";
-    inputData.price = "";
-
   }
-  
-  localStorage.setItem("buy_data", JSON.stringify(inputArr));
-  // .................................................
+
 
   return (
     <div className="md:p-0 md:m-0 col-span-4 sm:col-span-6">
@@ -35,8 +41,8 @@ function BuyZone() {
         <div>
           <input
             required 
-            onChange={changeHandle}
-            value={inputData.amount}
+            onChange={(e) => {setBuyAmount(e.target.value)}}
+            // value={empty}
             name="amount"
             type="number"
             pattern="[0-9]"
@@ -52,8 +58,8 @@ function BuyZone() {
         <div>
           <input
             required
-            onChange={changeHandle}
-            value={inputData.price}
+            onChange={(e) => { setBuyPrice(e.target.value)}}
+            // value={empty}
             name="price"
             type="number"
             pattern="[0-9]"

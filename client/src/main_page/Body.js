@@ -20,7 +20,7 @@ function Body() {
       "
       >
         {/* order book sell*/}
-        <div
+        {/* <div
           className="md:row-start-1 md:row-span-3 md:col-start-10 md:col-end-13 md:mt-1 md:rounded md:border-slate-300 md:border md:block
         hidden
         "
@@ -33,7 +33,7 @@ function Body() {
         "
         >
           <Orderbuy></Orderbuy>
-        </div>
+        </div> */}
 
         {/* current coin */}
         <div
@@ -57,7 +57,7 @@ function Body() {
         </div>
 
         <div
-          className="md:row-start-2 md:row-span-3 md:col-start-4 md:col-end-10 md:bg-slate-100 h-500
+          className="md:row-start-2 md:row-span-3 md:col-start-4 md:col-end-13 md:bg-slate-100 h-500
         row-start-2 row-span-1 col-end-4 col-start-1 bg-white z-2 
         "
         >
@@ -67,7 +67,7 @@ function Body() {
 
         {/* buy & sell area */}
         <div
-          className="md:row-start-5 md:row-span-2 md:col-start-4 md:col-end-10 md:border md:rounded md:bg-slate-200 md:border-slate-300 
+          className="md:row-start-5 md:row-span-2 md:col-start-4 md:col-end-13 md:border md:rounded md:bg-slate-200 md:border-slate-300 
         row-start-3 row-end-6 col-start-1 col-span-3 bg-slate-200
         "
         >
@@ -77,7 +77,7 @@ function Body() {
           {/* balance and fund */}
           <BalanceAndFund></BalanceAndFund>
 
-          <div className="sm:grid sm:p-0 grid-cols-9 sm:grid-cols-12 sm:gap-10 sm:mx-3 lg:mx-10 flex flex-col p-5 m-0">
+          <div className="sm:grid sm:p-0  col-end-8 sm:px-28 sm:grid-cols-12 sm:gap-10 sm:mx-3 lg:mx-10 flex flex-col p-5 m-0">
             {/* buy zone */}
             <BuyArea></BuyArea>
             {/* sell zone */}

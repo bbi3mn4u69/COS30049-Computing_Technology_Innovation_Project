@@ -8,21 +8,21 @@ import { useAuth } from "../context/context";
 
 export default function Login() {
 
-  const { isLogin, setIslogin} = useAuth()
+  const { isLogin, setIslogin} = useAuth();
+  const {username, setUserName} = useAuth();
   
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const url = "http://localhost:3002/login"
   
-  const [usernameLogin, setusernameLogin] = useState("")
-  const [passwordLogin, setpasswordLogin] = useState("")
-  const [isAuthenticated, setisAuthenticated] = useState("")
-
+  const [passwordLogin, setpasswordLogin] = useState("");
+  
   const login = () => {
-    if (usernameLogin != null && passwordLogin != null) {
+    if (username != null && passwordLogin != null) {
       Axios.post(url, 
-        {username: usernameLogin, password: passwordLogin})
+        {username: username, password: passwordLogin})
         .then((response) => {
+          console.log(response)
         if (response.data.success) {
           toast.success('Login successful!', {
             position: 'top-right',
@@ -32,7 +32,7 @@ export default function Login() {
           nav('../main_page/Body', {replace: true})
         } else {
             setIslogin(false)
-            toast.success('username already being taken', {
+            toast.success('Login unsuccessful!', {
               position: 'top-right',
               autoClose: 3000,
             })
@@ -43,7 +43,7 @@ export default function Login() {
   }
 
   return (
-    <div className="bg-slate-200">
+    <div className="bg-slate-200 h-screen">
       <div
         className="absolute inset-x-0 -top-40 -z-9 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -85,7 +85,7 @@ export default function Login() {
                       id="email"
                       name="email"
                       type="email"
-                      onChange={(e) => {setusernameLogin(e.target.value)}}
+                      onChange={(e) => {setUserName(e.target.value)}}
                       autoComplete="email"
                       required
                       className="block w-full bg-slate-300 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-slate-300 placeholder:text-gray-400 sm:text-sm "

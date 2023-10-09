@@ -16,7 +16,7 @@ function SignUp() {
   const [passwordSig, setpasswordSig] = useState("")
 
   const signup = () => {
-    if (usernameSig != null && passwordSig != null) {
+    if (usernameSig !== null && passwordSig !== null) {
       Axios.post(url,
         {username: usernameSig, password: passwordSig})
         .then((response) => {
@@ -62,15 +62,15 @@ function SignUp() {
             </div>
             <form>
             <div class="mb-6">
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
               <input type="email" 
               id="email" 
               onChange={(e) => {setUsernameSig(e.target.value)}}
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@flowbite.com" required>
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@gmail.com" required>
               </input>
             </div>
             <div class="mb-6">
-              <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+              <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Your password</label>
               <input type="password" 
               id="password" 
               onChange={(e) => {setpasswordSig(e.target.value)}}

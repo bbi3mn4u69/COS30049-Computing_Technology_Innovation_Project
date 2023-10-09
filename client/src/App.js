@@ -9,41 +9,47 @@ import SignUp from "./signup_page/Signup";
 import { AuthProvider, useAuth } from "./context/context";
 
 
+
 function App() {
   const location = useLocation();
-  const { isLogin } = useAuth()
+  const { isLogin } = useAuth();
 
   // Determine whether to show the NavBar and Footer
   const isLoginPage = location.pathname === "/login_page/Login";
-  const isSignUpPage = location.pathname === "/signup_page/Signup"
+  const isSignUpPage = location.pathname === "/signup_page/Signup";
   const isNopage = location.pathname === "*";
   const showNavBarAndFooter = !isLoginPage && !isNopage && !isSignUpPage;
 
-
   return (
     <>
-      {showNavBarAndFooter && <NavBar></NavBar> }
-      <div className="content-container">
-         <Routes>
-          <Route index element={<Home></Home>}></Route>
-          {isLogin ? (
-              <>
-                {/* If isLogin is true, don't render login and signup pages */}
-                <Route path="/home_page/Home" element={<Home></Home>}></Route>
-                <Route path="/main_page/Body" element={<Body></Body>}></Route>
-              </>
-            ) : (
-              <>
-                {/* If isLogin is false, don't render Body page */}
-                <Route path="/login_page/Login" element={<Login></Login>}></Route>
-                <Route path="/signup_page/Signup" element={<SignUp></SignUp>}></Route>
-              </>
-            )}
-          <Route path="/home_page/Home" element={<Home></Home>}></Route> 
-          <Route path='*' element={<NoPage></NoPage>}></Route>
-        </Routes> 
-      </div>
-      {showNavBarAndFooter && <Footer></Footer>}
+          {showNavBarAndFooter && <NavBar></NavBar>}
+          <div className="content-container">
+            <Routes>
+              <Route index element={<Home></Home>}></Route>
+              {isLogin ? (
+                <>
+                  {/* If isLogin is true, don't render login and signup pages */}
+                  <Route path="/home_page/Home" element={<Home></Home>}></Route>
+                  <Route path="/main_page/Body" element={<Body></Body>}></Route>
+                </>
+              ) : (
+                <>
+                  {/* If isLogin is false, don't render Body page */}
+                  <Route
+                    path="/login_page/Login"
+                    element={<Login></Login>}
+                  ></Route>
+                  <Route
+                    path="/signup_page/Signup"
+                    element={<SignUp></SignUp>}
+                  ></Route>
+                </>
+              )}
+              <Route path="/home_page/Home" element={<Home></Home>}></Route>
+              <Route path="*" element={<NoPage></NoPage>}></Route>
+            </Routes>
+          </div>
+          {showNavBarAndFooter && <Footer></Footer>}
     </>
   );
 }

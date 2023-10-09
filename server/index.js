@@ -1,29 +1,23 @@
 const express = require('express'); 
 const mysql = require('mysql');
 const cors = require('cors');
-const session = require('express-session');
-// const sql = require('mssql');
+
 
 const app = express();
+
+
 
 app.use(express.json());
 app.use(cors());
 
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     user: "root",
     host: "127.0.0.1",
     password: "password",
-    database: "inno"
-}) 
+    database: "inno",
+})
 
-
-db.connect(function(err) {
-    if (err) {
-        return console.error('error: ' + err.message);
-    }
-    console.log('Connected to the MySQL server.');
-});
 
 
 app.post('/signup', (reg, res) => {
@@ -31,7 +25,7 @@ app.post('/signup', (reg, res) => {
     const username = reg.body.username;
     const userpassword = reg.body.password;
 
-    db.query(
+    db.query( 
         "SELECT * FROM Authentication WHERE username = ?",
         [username],
         (err, rows) => {
@@ -53,6 +47,10 @@ app.post('/signup', (reg, res) => {
                                 res.status(500).json({ success: false, message: 'Server error' });
                             } else {
                                 res.status(200).json({ success: true, message: 'Registration successful' });
+                                db.query(
+                                    "CREATE TABLE IF NOT EXISTS " + username + " (TradeID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, Price INT NOT NULL, Amount INT NOT NULL, Total INT NOT NULL, TradeType VARCHAR(255), TradeDate VARCHAR(255), TradeTime VARCHAR(255))"
+                                ), [username] , (err, result) => { console.log(err) };
+    
                             }
                         }
                     );
@@ -62,32 +60,68 @@ app.post('/signup', (reg, res) => {
     );
 })
 
-
-
 app.post('/login', (reg, res) => {
-
     const username = reg.body.username;
     const userpassword = reg.body.password;
-    
+    module.exports.username1 = username;
 
     db.query(
         "SELECT * FROM Authentication WHERE username = ? AND userpassword = ?", 
         [username, userpassword],
-        (err, result) => {
-            if (err) {
-                console.log(err)
-                res.status(200).json({success: true, message: 'false'})
+        (err, rows ) => {
+            if (rows.length == 0) {
+                res.status(404).json({success: false, message: 'false'})
             }else {
-                console.log("true");
-                res.status(200).json({ success: true, message: 'true' })
+                res.status(200).json({success: true, message: 'true' }); 
             }
         }
     )
 })
 
+
+app.post('/api/usertrade/data', (reg, res) => {
+    const username = reg.body.username
+    db.query(
+        "SELECT * FROM ?? ",[username], (err, result) => {
+            res.send(result)
+        }
+    )
+})
+
+
+
+app.post('/api/usertrade', (reg, res) => {
+
+    const Price = reg.body.Price;
+    const username = reg.body.username;
+    const Amount = reg.body.Amount;
+    const tradeType = reg.body.tradeType;
+    const total = Price * Amount;
+    const tradeDate = new Date().toLocaleDateString('en-GB');
+    const tradeTime = new Date().toLocaleTimeString();
+
+    if( Price != null && Amount != null) {
+        db.query(
+            "INSERT INTO ?? (Price, Amount, Total, TradeType, TradeDate, TradeTime) VALUES (?,?,?,?,?,?)",
+            [username, Price, Amount, total, tradeType, tradeDate, tradeTime],
+            (err) => {
+                if (err) {
+                    res.status(200).json({success: false, message: 'false'})
+                }else {
+                    console.log(err)
+                    res.status(200).json({ success: true, message: 'true' })
+                }
+            }
+        )
+    } 
+
+
+
+})
+
 app.listen(3002, () => {
     console.log("server is running")
 })
-
+    
 
 
