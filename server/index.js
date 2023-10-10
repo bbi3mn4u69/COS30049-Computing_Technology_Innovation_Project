@@ -89,6 +89,16 @@ app.post('/api/usertrade/data', (reg, res) => {
 })
 
 
+app.post('/api/data/mydata', (reg, res) => {
+    const username = reg.body.username
+    db.query(
+        "SELECT * FROM ?? ",[username], (err, result) => {
+            res.send(result)
+        }
+    )
+})
+
+
 
 app.post('/api/usertrade', (reg, res) => {
 
@@ -121,6 +131,17 @@ app.post('/api/usertrade', (reg, res) => {
 
 app.listen(3002, () => {
     console.log("server is running")
+    
+    db.query(
+        "CREATE TABLE IF NOT EXISTS Authentication (UserId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL )"
+    ),(err, result) => {
+        if (err){
+            console.log(err);
+        }else{
+            console.log(result)
+        }
+    }
+
 })
     
 

@@ -35,6 +35,8 @@ function Body() {
           <Orderbuy></Orderbuy>
         </div> */}
 
+        
+
         {/* current coin */}
         <div
           className="md:row-start-1 md:row-span-1 md:mt-1 md:h-15 md:col-start-1 md:col-end-10 md:border-slate-300 md:rounded md:border 

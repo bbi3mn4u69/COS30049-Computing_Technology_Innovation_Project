@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-
+import { useAuth } from "../context/context";
 
 const TradingStyle = ({table, onClick, highlightedValue, tableValue}) => {
   return (
@@ -108,6 +108,21 @@ function Trading() {
 
 
 const TableComponent = ({selectTable}) => {
+
+  const url = "http://localhost:3002/api/data/mydata";
+
+  const [data, setData] = useState([]);
+  const {username} = useAuth();
+
+  useEffect(() => {
+    Axios.post(url, {username: username} )
+      .then((response) => {
+        setData(response.data)
+        console.log(response.data)
+    })
+  }, [data])
+
+
  switch (selectTable) {
   default:
     return (
@@ -124,6 +139,18 @@ const TableComponent = ({selectTable}) => {
               </tr>
             </thead>
             <tbody className="text-left ml-3 text-black uppercase font-light">
+             {
+              data ? 
+                data.map(
+                  (val) => {
+                    if(val !== null) {
+                      
+                    }
+                  }
+                )
+                : null
+             }
+             
               {/* {randomValues.map((rowValues, rowIndex) => (
                 <tr key={rowIndex}>
                   {rowValues.map((value, columnIndex) => (
