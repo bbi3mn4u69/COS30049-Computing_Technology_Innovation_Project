@@ -6,20 +6,23 @@ import Home from "./home_page/Home";
 import NoPage from "./main_page/NoPage";
 import Login from "./login_page/Login";
 import SignUp from "./signup_page/Signup";
-import { AuthProvider, useAuth } from "./context/context";
-
-
+import { useAuth } from "./context/context";
 
 function App() {
   const location = useLocation();
-  const { isLogin } = useAuth();
-
+  const { isLogin, setIslogin} = useAuth();
   // Determine whether to show the NavBar and Footer
   const isLoginPage = location.pathname === "/login_page/Login";
   const isSignUpPage = location.pathname === "/signup_page/Signup";
   const isNopage = location.pathname === "*";
   const showNavBarAndFooter = !isLoginPage && !isNopage && !isSignUpPage;
 
+  // let au = localStorage.getItem('authentication')
+  //   if(au === "true") {
+  //     setIslogin(true)
+  //   }else {
+  //     setIslogin(false)
+  //   }
   return (
     <>
           {showNavBarAndFooter && <NavBar></NavBar>}

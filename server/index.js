@@ -6,10 +6,8 @@ const cors = require('cors');
 const app = express();
 
 
-
 app.use(express.json());
 app.use(cors());
-
 
 const db = mysql.createPool({
     user: "root",
@@ -17,8 +15,6 @@ const db = mysql.createPool({
     password: "password",
     database: "inno",
 })
-
-
 
 app.post('/signup', (reg, res) => {
 
@@ -63,14 +59,13 @@ app.post('/signup', (reg, res) => {
 app.post('/login', (reg, res) => {
     const username = reg.body.username;
     const userpassword = reg.body.password;
-    module.exports.username1 = username;
 
     db.query(
         "SELECT * FROM Authentication WHERE username = ? AND userpassword = ?", 
         [username, userpassword],
         (err, rows ) => {
             if (rows.length == 0) {
-                res.status(404).json({success: false, message: 'false'})
+                res.status(200).json({success: false, message: 'false'})
             }else {
                 res.status(200).json({success: true, message: 'true' }); 
             }
@@ -78,25 +73,33 @@ app.post('/login', (reg, res) => {
     )
 })
 
+app.post('/api/data/remove', (reg, res) => {
+ 
+    const index = reg.body.index
+    const username = reg.body.username
+    db.query(
+        "DELETE FROM ?? WHERE TradeID = ?",[username, index],
+         (err, result) => {
+            if(err){
+                console.log(err)
+                res.send('err')
+            } else {
+                console.log('ok')
+            }
+        }
+    )
+})
 
 app.post('/api/usertrade/data', (reg, res) => {
     const username = reg.body.username
     db.query(
         "SELECT * FROM ?? ",[username], (err, result) => {
-            res.send(result)
+          res.send(result)
         }
     )
+
 })
 
-
-app.post('/api/data/mydata', (reg, res) => {
-    const username = reg.body.username
-    db.query(
-        "SELECT * FROM ?? ",[username], (err, result) => {
-            res.send(result)
-        }
-    )
-})
 
 
 
@@ -131,9 +134,9 @@ app.post('/api/usertrade', (reg, res) => {
 
 app.listen(3002, () => {
     console.log("server is running")
-    
+
     db.query(
-        "CREATE TABLE IF NOT EXISTS Authentication (UserId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL )"
+        "CREATE TABLE IF NOT EXISTS Authentication (UserId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, username VARCHAR(255) NOT NULL, userpassword VARCHAR(255) NOT NULL )"
     ),(err, result) => {
         if (err){
             console.log(err);

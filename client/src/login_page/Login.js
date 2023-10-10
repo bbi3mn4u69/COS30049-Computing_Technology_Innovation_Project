@@ -8,9 +8,9 @@ import { useAuth } from "../context/context";
 
 export default function Login() {
 
-  const { isLogin, setIslogin} = useAuth();
+
   const {username, setUserName} = useAuth();
-  
+  const { isLogin, setIslogin} = useAuth();
   const nav = useNavigate();
 
   const url = "http://localhost:3002/login"
@@ -18,32 +18,39 @@ export default function Login() {
   const [passwordLogin, setpasswordLogin] = useState("");
   
   const login = () => {
-    if (username != null && passwordLogin != null) {
+    if (username !== null && passwordLogin !== null) {
       Axios.post(url, 
         {username: username, password: passwordLogin})
         .then((response) => {
           console.log(response)
-        if (response.data.success) {
+        if (response.data.message == 'true') {
           toast.success('Login successful!', {
             position: 'top-right',
             autoClose: 3000,
           }) 
           setIslogin(true)
+          // localStorage.setItem('authentication', true )
           nav('../main_page/Body', {replace: true})
         } else {
-            setIslogin(false)
-            toast.success('Login unsuccessful!', {
+          setIslogin(false)
+          // localStorage.setItem('authentication', false)
+            toast.error('Login unsuccessful!', {
               position: 'top-right',
               autoClose: 3000,
             })
          
         }
       })
+    }else{
+      toast.success('Missing username or password!', {
+        position: 'top-right',
+        autoClose: 3000,
+      }) 
     }
   }
 
   return (
-    <div className="bg-slate-200 h-screen">
+    <section className="bg-slate-200 h-screen">
       <div
         className="absolute inset-x-0 -top-40 -z-9 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -149,6 +156,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -2,22 +2,31 @@ import bitcoinLogo from "./Image/bitcoin-15482.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/context";
 import { AuthProvider } from "../context/context";
+import { toast } from 'react-toastify';
 
 function Login() {
-  const { isLogin, setIslogin } = useAuth()
-  if(isLogin == true) {
+
+  const {isLogin, setIslogin} = useAuth();
+  let au = localStorage.getItem('authentication');
+  console.log(au)
+
+
+
+  if (isLogin === true) {
+    console.log("run this")
     return(
       <li>
       <Link
         to="../home_page/Home"
       > 
-      <button onClick={() => {setIslogin(false)}} className="block p-0 text-gray-500 bg-slate-200 border-0 hover:text-yellow-600" >
+      <button onClick={() => {setIslogin(false); localStorage.setItem('authentication', false)}   } className="block p-0 text-gray-500 bg-slate-200 border-0 hover:text-yellow-600" >
           Log Out
       </button>        
       </Link>
   </li> 
     );
   }else{
+    console.log("run this")
    return (
       <li>
       <Link

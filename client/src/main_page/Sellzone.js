@@ -21,7 +21,7 @@ const buttonHandle = () => {
           autoClose: 3000,
         })
       }else {
-        toast.success('order has fail!', {
+        toast.error('order has fail!', {
           position: 'top-right',
           autoClose: 3000,
         })

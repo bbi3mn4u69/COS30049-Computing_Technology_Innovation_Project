@@ -7,7 +7,7 @@ export function useAuth() {
 }
 
 export function AuthProvider(props) {
-    const [isLogin, setIslogin] = useState(false)
+    const [isLogin, setIslogin] = useState(true)
     const [username, setUserName] = useState('')
     const value = {
         isLogin, setIslogin,

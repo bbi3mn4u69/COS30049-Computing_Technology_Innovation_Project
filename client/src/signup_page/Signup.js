@@ -16,6 +16,7 @@ function SignUp() {
   const [passwordSig, setpasswordSig] = useState("")
 
   const signup = () => {
+
     if (usernameSig !== null && passwordSig !== null) {
       Axios.post(url,
         {username: usernameSig, password: passwordSig})
@@ -30,7 +31,6 @@ function SignUp() {
             nav('../login_page/Login', { replace: true })
           }
         })
-
     }else{
       console.log("no input field")
     }
