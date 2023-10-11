@@ -95,6 +95,7 @@ const TableComponent = ({ selectTable }) => {
               {
                 data ?
               data.map((i) => {
+                return (
                 <tr className="px-0 text-left text-black">
                   <th>
                     {i.Price}
@@ -105,14 +106,16 @@ const TableComponent = ({ selectTable }) => {
                   <td>
                     {i.TradeTime}
                   </td>
-                </tr>;
-              }) 
-              : null
+                </tr>
+                );
+              }) :
+              null
             }
             </tbody>
           </table>
         </div>
       );
+    /*
     case 2:
       return (
         <div className="overflow-y-auto h-300 overflow-x-hidden grid grid-cols-12">
@@ -130,19 +133,19 @@ const TableComponent = ({ selectTable }) => {
             <tbody className="text-left ml-3 text-black uppercase font-light">
               <tr className="px-0 text-left">
                 <td>
-                  huy
+                  
                 </td>
                 <td>
-                  huy
+                  
                 </td>
                 <td>
-                  huy
+                  
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-      );
+      );*/
   }
 };
 export default Trading;
