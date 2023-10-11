@@ -1,4 +1,4 @@
-# this project created by react app and node js
+# this project created by react app, node js and solidity
 
 
 ## READ README in client side
