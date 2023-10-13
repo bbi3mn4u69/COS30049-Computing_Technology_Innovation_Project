@@ -51,7 +51,7 @@ function Body() {
         <ListOfCrypto></ListOfCrypto>
         {/* trading */}
         <div
-          className="md:mt-1 md:row-start-4 md:row-span-3 md:rounded md:col-start-1 md:col-end-4 md:border md:border-slate-300 md:block 
+          className=" md:h-390 md:mt-1 md:row-start-4 md:row-span-3 md:rounded md:col-start-1 md:col-end-4 md:border md:border-slate-300 md:block 
         hidden
         "
         >
