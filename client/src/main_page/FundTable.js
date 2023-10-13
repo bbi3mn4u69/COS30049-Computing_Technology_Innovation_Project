@@ -4,9 +4,31 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/context";
 import { toast } from 'react-toastify';
 import { ethers } from "ethers";
-
+import web3 from "../shared_component/web3";
 
 const FundTable = () => {
+
+
+  const [balanceEther, setBalanceInEther] = useState(null); // Initialize with null
+
+  //render the ETH account balance to front-end (fund table)
+  const init = async () => {
+    try {
+      const addresses = await web3.eth.getAccounts();
+      const balanceInWei = await web3.eth.getBalance(addresses[0]);
+      const balanceInEther = web3.utils.fromWei(balanceInWei, "ether");
+      setBalanceInEther(balanceInEther);
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+    }
+  };
+
+  useEffect(() => {
+    init()
+    console.log(balanceEther)
+  }, [balanceEther]);
+
+
     // table fund
   const { username } = useAuth();
   
@@ -60,10 +82,10 @@ const FundTable = () => {
                       {i.WalletID}
                     </th>
                     <td className="px-6 py-2 bg-slate-300">
-                      1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71
+                      0xEA9d2B4a8094AC0B3039B500B85ae0B90CE1CA5d
                     </td>
                     <td className="px-6 py-2">$25,000,000</td>
-                    <td className="px-6 py-2 bg-slate-300">15</td>
+                    <td className="px-6 py-2 bg-slate-300">{balanceEther}</td>
                   </tr>        
                 );
             })

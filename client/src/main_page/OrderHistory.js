@@ -4,6 +4,7 @@ import { useAuth } from "../context/context";
 import { toast } from "react-toastify";
 import Defaultable from "./DefaultTable";
 import FundTable from "./FundTable";
+import web3 from "../shared_component/web3";
 
 function OrderHistoryStyle({ order, onClick, highlightedOrder, orderValue }) {
   return (
