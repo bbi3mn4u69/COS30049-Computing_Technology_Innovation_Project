@@ -7,7 +7,7 @@ function SellZone() {
 const [empty, setEmpty] = useState("")
 const url = "http://localhost:3002/api/usertrade";
 const [sellPrice, setSellPrice] = useState("");
-const {username, setUserName} = useAuth();
+const username = localStorage.getItem('username')
 const [sellAmount, setSellAmount] = useState("");
 const tradeType = "SELL";
 
