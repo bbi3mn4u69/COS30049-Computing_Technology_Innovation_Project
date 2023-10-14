@@ -1,6 +1,7 @@
 const express = require('express'); 
 const mysql = require('mysql');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 
 const app = express();
@@ -8,6 +9,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.urlencoded({extended: true}))
+
 
 const db = mysql.createPool({
     user: "root",
@@ -43,13 +46,22 @@ app.post('/signup', (reg, res) => {
                                 res.status(500).json({ success: false, message: 'Server error' });
                             } else {
                                 res.status(200).json({ success: true, message: 'Registration successful' });
+                                // create table contain user buy order and sell order detail
                                 db.query(
                                     "CREATE TABLE IF NOT EXISTS " + username + " (TradeID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, Price INT NOT NULL, Amount INT NOT NULL, Total INT NOT NULL, TradeType VARCHAR(255), TradeDate VARCHAR(255), TradeTime VARCHAR(255))"
                                 ), [username] , (err, result) => { console.log(err) };
-    
+                                // create table contain user wallet
+                                db.query(
+                                    "CREATE TABLE IF NOT EXISTS " + username + "_wallet (WalletID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, Money_ballance INT NOT NULL, Crypto_balance INT NOT NULL, WalletAddreess VARCHAR(255) UNIQUE)"
+                                ) , [username], (err, result) => {console.log(err)};
+                                db.query(
+                                    "INSERT INTO " + username +"_wallet (Money_ballance, Crypto_balance, WalletAddreess) VALUES (25000, 10,'0x3877bDcE6d2B6d9Da4D5223dBA63Ad59379fb07A')",
+                                     ((err) => {console.log(err)})
+                                )  
                             }
                         }
                     );
+                   
                 }
             }
         }
@@ -59,7 +71,7 @@ app.post('/signup', (reg, res) => {
 app.post('/login', (reg, res) => {
     const username = reg.body.username;
     const userpassword = reg.body.password;
-
+    // valid login ?
     db.query(
         "SELECT * FROM Authentication WHERE username = ? AND userpassword = ?", 
         [username, userpassword],
@@ -77,6 +89,7 @@ app.post('/api/data/remove', (reg, res) => {
  
     const index = reg.body.index
     const username = reg.body.username
+    // remove the order from the data base ?
     db.query(
         "DELETE FROM ?? WHERE TradeID = ?",[username, index],
          (err, result) => {
@@ -91,7 +104,9 @@ app.post('/api/data/remove', (reg, res) => {
 })
 
 app.post('/api/usertrade/data', (reg, res) => {
-    const username = reg.body.username
+    // const username = reg.body.username
+    const username = reg.body.username;
+    // get the trade data 
     db.query(
         "SELECT * FROM ?? ",[username], (err, result) => {
           res.send(result)
@@ -99,9 +114,6 @@ app.post('/api/usertrade/data', (reg, res) => {
     )
 
 })
-
-
-
 
 app.post('/api/usertrade', (reg, res) => {
 
@@ -114,6 +126,9 @@ app.post('/api/usertrade', (reg, res) => {
     const tradeTime = new Date().toLocaleTimeString();
 
     if( Price != null && Amount != null) {
+
+        // record the order that the user place if completeted ?
+
         db.query(
             "INSERT INTO ?? (Price, Amount, Total, TradeType, TradeDate, TradeTime) VALUES (?,?,?,?,?,?)",
             [username, Price, Amount, total, tradeType, tradeDate, tradeTime],
@@ -127,10 +142,27 @@ app.post('/api/usertrade', (reg, res) => {
             }
         )
     } 
+})
 
-
+app.post('/api/user/fund', (reg, res) => {
+    const username = reg.body.username;
+    
+    // get the wallet detail
+    db.query(
+        // "SELECT * FROM " + username + "_wallet"
+        "select * from admin3_wallet;"
+    ), 
+    ((err, result) => {
+        if (err) {
+            console.log(err)
+        }else {
+            res.send(result)
+            console.log(result)
+        }
+    })
 
 })
+
 
 app.listen(3002, () => {
     console.log("server is running")
@@ -141,6 +173,16 @@ app.listen(3002, () => {
         if (err){
             console.log(err);
         }else{
+            console.log(result)
+        }
+    }
+
+    db.query(
+        "CREATE DATABASE IF NOT EXISTS inno;"
+    ), (err, result) => {
+        if (err){
+            console.log(err);
+        }else {
             console.log(result)
         }
     }

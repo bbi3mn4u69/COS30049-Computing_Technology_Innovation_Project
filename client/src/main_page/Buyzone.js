@@ -1,17 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios  from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/context";
-
+import web3 from "../shared_component/web3";
+import contract_properties from "./contract_properties.json";
 
 function BuyZone() {
-
   const url = "http://localhost:3002/api/usertrade";
   const [empty, setEmpty] = useState("");
   const {username, setUserName} = useAuth();
   const [buyPrice, setBuyPrice] = useState ("");
   const [buyAmount, setBuyAmount] = useState ("");
   const tradeType = "BUY";
+
+  const Smart_contract = async () => {
+    const contractAddress = '0x9AcB1A7585d2102bF56bA38A8f635F73cee720C8';
+    // Create a contract instance
+    const contract = new web3.eth.Contract(contract_properties.abi, contractAddress);
+    console.log(contract_properties)
+    console.log(contract);
+    const addresses = await web3.eth.getAccounts();
+
+    //call methods from smart contract to add users and transactions information to the blockchain, then buy crypto to the account
+    try {
+      await contract.methods.addUser(username).send({
+        from: addresses[0],
+        gasLimit: 999999
+      });
+      await contract.methods.addTransact(buyPrice, buyAmount, tradeType).send({
+        from: addresses[0],
+        gasLimit: 999999
+      });
+      await contract.methods.buyToken().send({
+        from: addresses[1],
+        to: addresses[0],
+        value: web3.utils.toWei(buyAmount.toString(), 'ether'),
+        gasLimit: 999999
+      });
+    } catch(error) {
+      console.error("Smart contract method call failed:", error);
+    }
+  }
+
 
   const buttonHandle = () => {
     if (buyPrice !== null && buyAmount !== null) {
@@ -21,14 +51,17 @@ function BuyZone() {
           toast.success('order place successful!', {
             position: 'top-right',
             autoClose: 3000,
-          })
+          });
+          //initiate smart contract operation (only when order successful)
+          Smart_contract()
         }else {
-          toast.error('order has fail!', {
+          toast.success('order has fail!', {
             position: 'top-right',
             autoClose: 3000,
-          })
+          });
         }
       })
+      console.log(username);
       setEmpty("")
     }
   }
@@ -48,7 +81,7 @@ function BuyZone() {
             pattern="[0-9]"
             className="block w-full text-xs p-2 mr-3 text-black border border-slate-300 rounded bg-slate-300 sm:text-xs hover:border-yellow-600 focus:border-yellow-600 outline-none
   placeholder:text-gray-500 placeholder:text-xl placeholder:text-right placeholder:uppercase placeholder:font-light"
-            placeholder="btc"
+            placeholder="eth"
           ></input>
         </div>
       </div>

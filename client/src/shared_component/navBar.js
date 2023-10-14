@@ -9,9 +9,6 @@ function Login() {
   const {isLogin, setIslogin} = useAuth();
   let au = localStorage.getItem('authentication');
   console.log(au)
-
-
-
   if (isLogin === true) {
     console.log("run this")
     return(

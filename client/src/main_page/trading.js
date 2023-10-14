@@ -64,7 +64,7 @@ const TableComponent = ({ selectTable }) => {
   const url = "http://localhost:3002/api/usertrade/data";
 
   const [data, setData] = useState([]);
-  const { username } = useAuth();
+  const username = localStorage.getItem('username')
 
 
     useEffect(() => {
@@ -72,16 +72,14 @@ const TableComponent = ({ selectTable }) => {
         setData(response.data);
       });
     }, [data]);
- 
-
 
   switch (selectTable) {
 
     default:
       return (
-        <div className="overflow-y-auto h-300 overflow-x-hidden grid grid-cols-12">
+        <div className="overflow-y-auto overflow-x-hidden grid grid-cols-12">
           <table
-            className="table-fixed w-full ml-5 col-start-2 col-span-11"
+            className="table-fixed w-full ml-5 col-start-2 col-span-11 "
             id="randomTable"
           >
             <thead>
@@ -91,25 +89,25 @@ const TableComponent = ({ selectTable }) => {
                 <th className="pt-2 m-3 text-sm">Time</th>
               </tr>
             </thead>
-            <tbody className="text-left ml-3 uppercase font-light">
+            <tbody className="text-left ml-3 uppercase font-light w-auto text-black">
               {
                 data ?
               data.map((i) => {
                 return (
-                <tr className="px-0 text-left text-black">
-                  <th>
-                    {i.Price}
-                  </th>
-                  <td>
-                    {i.Amount}
-                  </td>
-                  <td>
-                    {i.TradeTime}
-                  </td>
-                </tr>
+                  <tr className="px-0 text-left">
+                    <td>
+                      {i.Price}
+                    </td>
+                    <td>
+                      {i.Amount}
+                    </td>
+                    <td>
+                      {i.TradeTime}
+                    </td>
+                  </tr>
                 );
-              }) :
-              null
+              }) 
+              : null
             }
             </tbody>
           </table>
@@ -118,9 +116,9 @@ const TableComponent = ({ selectTable }) => {
     /*
     case 2:
       return (
-        <div className="overflow-y-auto h-300 overflow-x-hidden grid grid-cols-12">
+        <div className="overflow-y-auto overflow-x-hidden grid grid-cols-12 h-300">
           <table
-            className="table-fixed w-full ml-5 col-start-2 col-span-11"
+            className="table-fixed w-full ml-5 col-start-2 col-span-11 h-300"
             id="randomTable"
           >
             <thead>
