@@ -63,23 +63,84 @@ function Trading() {
 const TableComponent = ({ selectTable }) => {
   const url = "http://localhost:3002/api/usertrade/data";
 
-  const [data, setData] = useState([]);
-  const username = localStorage.getItem('username')
+
+ const [data, setData] = useState([]);
+  const [data1, setData1] = useState(null);
+  const [data2, setData2] = useState(null);
+   const username = localStorage.getItem('username')
 
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchData = async () => {
+
+      const url2 = 'https://rest.coinapi.io/v1/trades/BITSTAMP_SPOT_ETH_USD/history?time_start=2023-09-14T00:00:00';
+      const headers = {'X-CoinAPI-Key': '75EB34BD-EF41-4F29-9340-D309DFF1240A'};
+
+      const response = await fetch(url2, {method: "GET", headers: headers});
+      const json = await response.json();
+      setData2(json)
+    };
+  
+    fetchData();
+  }, []); 
+
+  console.log(data2)
+      useEffect(() => {
       Axios.post(url, { username: username }).then((response) => {
         setData(response.data);
       });
     }, [data]);
 
+
   switch (selectTable) {
 
-    case 2:
+    default:
       return (
         <div className="overflow-y-auto h-300 overflow-x-hidden grid grid-cols-12">
           <table
             className="table-fixed h-fit w-full ml-5 col-start-2 col-span-11 "
+            id="randomTable"
+          >
+            <thead>
+              <tr className="sticky top-0 text-black text-left bg-slate-200">
+                <th className="pt-2 m-3 text-sm">Price(USD)</th>
+                <th className="pt-2 m-3 text-sm ">Amount(ETH)</th>
+                <th className="pt-2 m-3 text-sm">Time</th>
+              </tr>
+            </thead>
+            <tbody className="text-left ml-3 uppercase font-light w-auto text-black">
+              {
+
+                data2 ?
+                data2.map((i) => {
+                  return (
+                    <tr className="px-0 text-left text-black">
+                      <th>
+                        {i.price}
+                      </th>
+                      <td>
+                        {i.size}
+                      </td>
+                      <td>
+                        {i.time_exchange}
+                      </td>
+                    </tr>
+                  );
+                }) :
+                null
+              }
+
+            </tbody>
+          </table>
+        </div>
+      );
+    /*
+    case 2:
+
+      return (
+        <div className="overflow-y-auto overflow-x-hidden grid grid-cols-12 h-300">
+          <table
+            className="table-fixed w-full h-fit  ml-5 col-start-2 col-span-11 h-fit "
             id="randomTable"
           >
             <thead>
@@ -89,9 +150,8 @@ const TableComponent = ({ selectTable }) => {
                 <th className="pt-2 m-3 text-sm">Time</th>
               </tr>
             </thead>
-            <tbody className="text-left ml-3 uppercase font-light w-auto text-black">
-              {
-                data ?
+            <tbody className="text-left ml-3 text-black uppercase font-light">
+                           { data ?
               data.map((i) => {
                 return (
                   <tr className="px-0 text-left">
@@ -112,37 +172,7 @@ const TableComponent = ({ selectTable }) => {
             </tbody>
           </table>
         </div>
-      );
-    default:
-      return (
-        <div className="overflow-y-auto overflow-x-hidden grid grid-cols-12 h-300">
-          <table
-            className="table-fixed w-full h-fit  ml-5 col-start-2 col-span-11 "
-            id="randomTable"
-          >
-            <thead>
-              <tr className="sticky top-0 text-black text-left bg-slate-200">
-                <th className="pt-2 m-3 text-sm">Price(USDT)</th>
-                <th className="pt-2 m-3 text-sm ">Amount(BTC)</th>
-                <th className="pt-2 m-3 text-sm">Time</th>
-              </tr>
-            </thead>
-            <tbody className="text-left ml-3 text-black uppercase font-light">
-              <tr className="px-0 text-left">
-                <td>
-                  huy
-                </td>
-                <td>
-                  huy
-                </td>
-                <td>
-                  huy
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      );
+      );*/
   }
 };
 export default Trading;

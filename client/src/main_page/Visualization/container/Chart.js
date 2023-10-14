@@ -56,30 +56,31 @@ const Chart = (props) => {
 
         const x = e.nativeEvent.offsetX;
         const y = e.nativeEvent.offsetY;
+
         const tooltipData = dataAtDate(dateAt(x));
 
         if (tooltipData) {
-        const adjustedX =
-            x + tooltipWidth > chart_width ? x - tooltipWidth : x;
-        setTooltipContent({
-            date: dateAt(x),
-            open: tooltipData.open,
-            high: tooltipData.high,
-            low: tooltipData.low,
-            close: tooltipData.close,
-            volume: tooltipData.volume,
-        });
-        setTooltipPosition({ x: adjustedX, y });
+            const adjustedX =
+                x + tooltipWidth > chart_width ? x - tooltipWidth : x;
+            setTooltipContent({
+                date: dateAt(x), 
+                open: tooltipData.open,
+                high: tooltipData.high,
+                low: tooltipData.low,
+                close: tooltipData.close,
+                volume: tooltipData.volume,
+            });
+            setTooltipPosition({ x: adjustedX, y });
         } else {
-        setTooltipContent(null);
-        setTooltipPosition({ x: 0, y: 0 });
+            setTooltipContent(null);
+            setTooltipPosition({ x: 0, y: 0 });
         }
     };
 
     const dataAtDate = (date) => {
         return data.find((bar) => {
-        let newDate = new Date(date);
-        return bar.date.getTime() === newDate.getTime();
+            let newDate = new Date(date);
+            return bar.date.getTime() === newDate.getTime();
         });
     };
 

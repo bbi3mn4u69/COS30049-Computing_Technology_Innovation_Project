@@ -5,7 +5,7 @@ this api is created with node.js
 ## script
 
 ### `npm install body-praser`
-### `npm install cors`
+### `npm install body-praser`
 ### `npm install express`
 ### `npm install express-session`
 ### `npm install fs`

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+
+import React, {useState, useEffect} from "react";
+import pLimit from 'p-limit';
 
 import Axios from "axios";
 
@@ -47,8 +49,33 @@ function Star({ value, data, setData }) {
   );
 }
 
+function ListOfCrypto({ data }) {
+  function filterData(data) {
+    // Get today's date in the format "YYYY-MM-DD"
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd + 'T00:00:00.0000000Z';
+    
+
+    // Filter the data
+    let filteredData = [];
+    let pairs = new Set();
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].date === today && !pairs.has(data[i].pair)) {
+            filteredData.push(data[i]);
+            pairs.add(data[i].pair);
+        }
+    }
+    return filteredData;
+  }
+
+  data = filterData(data)
+  
+
 function ListOfCrypto() {
-  const [data, setData] = useState([]);
+  const [data1, setData] = useState([]);
   const [search, setSearch] = useState("");
   const url = "http://localhost:3002/api/get/assestlist";
 
@@ -56,7 +83,6 @@ function ListOfCrypto() {
     Axios.get(url).then((response) => {
       setData(response.data);
     });
-    console.log(data);
   }, []);
 
   return (
@@ -113,8 +139,8 @@ function ListOfCrypto() {
             </tr>
           </thead>
           <tbody className="text-left ml-3  uppercase font-light text-black">
-            {data
-              ? data
+            {data1
+              ? data1
                   .filter((val) => {
                     return search.toLowerCase() === ""
                       ? val
@@ -134,23 +160,23 @@ function ListOfCrypto() {
                                <Star value={val.Assest_ID} data={data} setData={setData} />  
                             <div>{val.assest_name}</div>
                           </td>
-                          <td>$ {val.assest_price}</td>
-                          <td
-                            className={`${
-                              change ? "text-green-500" : "text-red-500"
-                            }`}
-                          >
-                            {val.assest_change} {val.assest_change_values}
-                          </td>
+                   {data.map((row, index) => (
+
+                    <td>{row.close}</td>
+                    <td className={row.changeClass}>{row.change_percent}</td>
+            ))}
                         </tr>
                       );
                     }
                   })
               : null}
+
           </tbody>
+
         </table>
       </div>
     </div>
   );
 }
 export default ListOfCrypto;
+
