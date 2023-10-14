@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import pLimit from 'p-limit';
 
 function Star() {
   
@@ -28,7 +29,28 @@ function Star() {
   );
 }
 
-function listOfCrypto() {
+function ListOfCrypto({ data }) {
+  function filterData(data) {
+    // Get today's date in the format "YYYY-MM-DD"
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd + 'T00:00:00.0000000Z';
+
+    // Filter the data
+    let filteredData = [];
+    let pairs = new Set();
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].date === today && !pairs.has(data[i].pair)) {
+            filteredData.push(data[i]);
+            pairs.add(data[i].pair);
+        }
+    }
+    return filteredData;
+  }
+
+  data = filterData(data)
   
   return (
     <div
@@ -81,149 +103,25 @@ function listOfCrypto() {
             </tr>
           </thead>
           <tbody className="text-left ml-3  uppercase font-light text-black">
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>btc</div>
-              </td>
-              <td>$26,000</td>
-              <td className="text-red-500">-10%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>eth</div>
-              </td>
-              <td>$1,634</td>
-              <td className="text-red-500">-10%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>usdt</div>
-              </td>
-              <td>$0.99</td>
-              <td className="text-green-500">+0.07%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>bnb</div>
-              </td>
-              <td>$213.1</td>
-              <td className="text-red-500">-9.95%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>xrp</div>
-              </td>
-              <td>$0.52</td>
-              <td className="text-red-500">-14.32%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>usdc</div>
-              </td>
-              <td>$0.99</td>
-              <td className="text-red-500">-0.01%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-              <Star></Star>
-              <div>  ada</div>
-              </td>
-              <td>$0.26</td>
-              <td className="text-red-500">-8.05%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-              <Star></Star>
-                <div>doge</div>
-              </td>
-              <td>$0.06</td>
-              <td className="text-red-500">-11.46%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>sol</div>
-              </td>
-              <td>$20.66</td>
-              <td className="text-red-500">-13.26%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-              <Star></Star>
-              <div>  trx</div>
-              </td>
-              <td>$0.08</td>
-              <td className="text-red-500">-0.73%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-               <Star></Star>
-               <div> dot</div>
-              </td>
-              <td>$4</td>
-              <td className="text-red-500">-8.63%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-              <Star></Star>
-              <div>  dai</div>
-              </td>
-              <td>$1</td>
-              <td className="text-green-500">+0.04%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-              <Star></Star>
-              <div>  matic</div>
-              </td>
-              <td>$0.55</td>
-              <td className="text-red-500">-13.87%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-              <Star></Star>
-              <div>  ton</div>
-              </td>
-              <td>$1.4</td>
-              <td className="text-red-500">-5.7%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>shib</div>
-              </td>
-              <td>$0</td>
-              <td className="text-red-500">-18.91%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>ltc</div>
-              </td>
-              <td>$64.9</td>
-              <td className="text-red-500">-18.14%</td>
-            </tr>
-            <tr>
-              <td className="flex flex-row space-x-1">
-                <Star></Star>
-                <div>wbtc</div>
-              </td>
-              <td>26,032</td>
-              <td className="text-red-500">-10.82%</td>
-            </tr>
+            {data.map((row, index) => (
+                <tr key={index}>
+                    <td className="flex flex-row space-x-1">
+                        <Star></Star>
+                        {console.log(row)}
+                        <div>{row.pair}</div>
+                    </td>
+                    <td>{row.close}</td>
+                    <td className={row.changeClass}>{row.change_percent}</td>
+                </tr>
+            ))}
           </tbody>
+
         </table>
       </div>
     </div>
   );
 }
-export default listOfCrypto;
+export default ListOfCrypto;
 
 
 

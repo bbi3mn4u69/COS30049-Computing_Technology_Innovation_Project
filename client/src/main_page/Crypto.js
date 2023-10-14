@@ -1,7 +1,27 @@
+function crypto( {data} ) {
+  // console.log(data)
+  function filterData(data) {
+    // Get today's date in the format "YYYY-MM-DD"
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd + 'T00:00:00.0000000Z';
 
+    // Filter the data
+    let filteredData = [];
+    let pairs = new Set();
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].date === today && !pairs.has(data[i].pair)) {
+            filteredData.push(data[i]);
+            pairs.add(data[i].pair);
+        }
+    }
+    return filteredData;
+  }
 
-
-function crypto() {
+  const selectedCoin = filterData(data)[0]
+  console.log(selectedCoin)
 
   return (
     <div
@@ -24,7 +44,7 @@ function crypto() {
       flex flex-col"
       >
         {/* current price of that crypto */}
-        <div className="text-red-500 block text-left">1,853.81</div>
+        <div className={`${selectedCoin.changeClass} text-left`}>1,853.81</div>
         {/* current price of that crypto */}
         <div className="text-black block text-left">$1,853.18</div>
       </div>
@@ -33,35 +53,28 @@ function crypto() {
         <div className="text-neutral-400 block text-xs font-bold text-left">
           24h Change
         </div>
-        <div className="text-green-500 block text-left">+6.28 +0.34%</div>
+        <div className={`${selectedCoin.changeClass} block text-left`}>{selectedCoin.change} {selectedCoin.change_percent}</div>
       </div>
       <div className="md:flex md:flex-col md:space-y-1 md:visible hidden">
         {/* 24h high */}
         <div className="text-neutral-400 block text-left text-xs font-bold ">
           24h High
         </div>
-        <div className="text-black block text-left">1,852.81</div>
+        <div className="text-black block text-left">{selectedCoin.high_24}</div>
       </div>
       <div className="md:flex md:flex-col md:space-y-1 md:visible hidden">
         {/* 24h Low */}
         <div className="text-neutral-400 block text-left text-xs font-bold ">
           24h Low
         </div>
-        <div className="text-black block text-left">1,844.82</div>
+        <div className="text-black block text-left">{selectedCoin.low_24}</div>
       </div>
       <div className="md:flex md:flex-col md:space-y-1 md:visible hidden">
         {/* 24h Volume (ETH) */}
         <div className="text-neutral-400 block text-left text-xs font-bold ">
           24h Volume(ETH)
         </div>
-        <div className="text-black block text-left ">1,844.82</div>
-      </div>
-      <div className="md:flex md:flex-col md:space-y-1 md:visible hidden">
-        {/* 24h Volume (USDT) */}
-        <div className="text-neutral-400 block text-left text-xs font-bold ">
-          24h Volume(USDT)
-        </div>
-        <div className="text-black block text-left">1,844.82</div>
+        <div className="text-black block text-left ">{selectedCoin.vol_24}</div>
       </div>
     </div>
   );
