@@ -104,7 +104,7 @@ const Defaultable = () => {
                         {val.TradeID}
                       </th>
                       <td className="px-6 py-2 bg-slate-300 uppercase">
-                        btc
+                        eth
                       </td>
                       <td className="px-6 py-2">{val.Amount}</td>
                       <td className="px-6 py-2 bg-slate-300">

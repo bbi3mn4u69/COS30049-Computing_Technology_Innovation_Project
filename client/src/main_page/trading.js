@@ -75,11 +75,11 @@ const TableComponent = ({ selectTable }) => {
 
   switch (selectTable) {
 
-    default:
+    case 2:
       return (
-        <div className="overflow-y-auto overflow-x-hidden grid grid-cols-12">
+        <div className="overflow-y-auto h-300 overflow-x-hidden grid grid-cols-12">
           <table
-            className="table-fixed w-full ml-5 col-start-2 col-span-11 "
+            className="table-fixed h-fit w-full ml-5 col-start-2 col-span-11 "
             id="randomTable"
           >
             <thead>
@@ -113,11 +113,11 @@ const TableComponent = ({ selectTable }) => {
           </table>
         </div>
       );
-    case 2:
+    default:
       return (
         <div className="overflow-y-auto overflow-x-hidden grid grid-cols-12 h-300">
           <table
-            className="table-fixed w-full ml-5 col-start-2 col-span-11 h-300"
+            className="table-fixed w-full h-fit  ml-5 col-start-2 col-span-11 "
             id="randomTable"
           >
             <thead>

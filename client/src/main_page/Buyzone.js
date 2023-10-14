@@ -8,13 +8,13 @@ import contract_properties from "./contract_properties.json";
 function BuyZone() {
   const url = "http://localhost:3002/api/usertrade";
   const [empty, setEmpty] = useState("");
-  const {username, setUserName} = useAuth();
+  const username = localStorage.getItem("username")
   const [buyPrice, setBuyPrice] = useState ("");
   const [buyAmount, setBuyAmount] = useState ("");
   const tradeType = "BUY";
 
   const Smart_contract = async () => {
-    const contractAddress = '0x9AcB1A7585d2102bF56bA38A8f635F73cee720C8';
+    const contractAddress = '0x0092162D5a4568eC32dA3Ad6760b86d25C6605f8';
     // Create a contract instance
     const contract = new web3.eth.Contract(contract_properties.abi, contractAddress);
     console.log(contract_properties)

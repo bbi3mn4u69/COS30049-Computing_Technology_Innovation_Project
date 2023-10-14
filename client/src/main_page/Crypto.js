@@ -13,10 +13,13 @@ function crypto() {
       flex flex-row items-center border-r border-slate-400 mr-3"
       >
         <div className="text-black block uppercase text-xl font-semibold pr-2">
-          btc/usdt
+          ETH/usdt
         </div>
         <div className="text-black block text-xs font-light underline underline-offset-2 pr-2">
-          Bitcoin Price
+          <a href="https://www.binance.com/en-AU/price/ethereum" target="_blank">
+          Ethereum Price
+          </a>
+        
         </div>
       </div>
       <div

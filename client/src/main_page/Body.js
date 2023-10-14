@@ -6,9 +6,7 @@ import BalanceAndFund from "./Balance&Fund";
 import ListOfCrypto from "./ListOfCrypto";
 import TradingSection from "./trading";
 import Coininfor from "./Crypto";
-import Ordersell from "./Orderbook_sell";
-import Orderbuy from "./Orderbook_buy";
-import OrderHistory  from "./OrderHistory";
+import OrderHistory from "./OrderHistory";
 
 function Body() {
   return (
@@ -19,24 +17,6 @@ function Body() {
       grid grid-cols-3 overflow-x-hidden gap-1 
       "
       >
-        {/* order book sell*/}
-        {/* <div
-          className="md:row-start-1 md:row-span-3 md:col-start-10 md:col-end-13 md:mt-1 md:rounded md:border-slate-300 md:border md:block
-        hidden
-        "
-        >
-          <Ordersell></Ordersell>
-        </div>
-        <div
-          className="md:row-start-4 md:row-span-3 md:col-start-10 md:col-end-13 md:mt-1 md:rounded md:border-slate-300 md:border md:block
-        hidden
-        "
-        >
-          <Orderbuy></Orderbuy>
-        </div> */}
-
-        
-
         {/* current coin */}
         <div
           className="md:row-start-1 md:row-span-1 md:mt-1 md:h-15 md:col-start-1 md:col-end-10 md:border-slate-300 md:rounded md:border 
