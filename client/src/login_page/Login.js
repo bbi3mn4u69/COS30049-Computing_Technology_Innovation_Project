@@ -29,11 +29,12 @@ export default function Login() {
             autoClose: 3000,
           }) 
           setIslogin(true)
-          // localStorage.setItem('authentication', true )
+          localStorage.setItem('username', username)
+          localStorage.setItem('authentication', true )
           nav('../main_page/Body', {replace: true})
         } else {
           setIslogin(false)
-          // localStorage.setItem('authentication', false)
+          localStorage.setItem('authentication', false)
             toast.error('Login unsuccessful!', {
               position: 'top-right',
               autoClose: 3000,

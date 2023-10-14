@@ -17,12 +17,12 @@ function App() {
   const isNopage = location.pathname === "*";
   const showNavBarAndFooter = !isLoginPage && !isNopage && !isSignUpPage;
 
-  // let au = localStorage.getItem('authentication')
-  //   if(au === "true") {
-  //     setIslogin(true)
-  //   }else {
-  //     setIslogin(false)
-  //   }
+  let au = localStorage.getItem('authentication')
+    if(au === "true") {
+      setIslogin(true)
+    }else {
+      setIslogin(false)
+    }
   return (
     <>
           {showNavBarAndFooter && <NavBar></NavBar>}

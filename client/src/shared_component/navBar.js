@@ -9,9 +9,6 @@ function Login() {
   const {isLogin, setIslogin} = useAuth();
   let au = localStorage.getItem('authentication');
   console.log(au)
-
-
-
   if (isLogin === true) {
     console.log("run this")
     return(
@@ -47,7 +44,7 @@ function NavBar() {
         <a href="" className="flex flex-row items-center">
           <div className="flex flex-row items-center">
             <img src={bitcoinLogo} className="h-8" alt="Bitcoin image" />
-            <p className=" uppercase text-xl font-semibold whitespace-nowrap mr-3 p-2 font-Noto text-yellow-600">
+            <p className=" uppercase text-xl font-semibold whitespace-nowrap mr-3 p-2 font-Noto text-yellow-500">
               bihitsun
             </p>
           </div>

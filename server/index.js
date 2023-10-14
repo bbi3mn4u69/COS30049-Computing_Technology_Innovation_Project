@@ -1,6 +1,7 @@
 const express = require('express'); 
 const mysql = require('mysql');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 
 const app = express();
@@ -8,6 +9,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.urlencoded({extended: true}))
+
 
 const db = mysql.createPool({
     user: "root",
@@ -15,6 +18,7 @@ const db = mysql.createPool({
     password: "password",
     database: "inno",
 })
+
 
 app.post('/signup', (reg, res) => {
 
@@ -27,7 +31,7 @@ app.post('/signup', (reg, res) => {
         (err, rows) => {
             if (err) {
                 console.log(err);
-                res.status(500).json({ success: false, message: 'Server error' });
+                res.status(200).json({ success: false, message: 'Server error' });
             } else {
                 if (rows.length > 0) {
                     // Username already exists
@@ -43,13 +47,22 @@ app.post('/signup', (reg, res) => {
                                 res.status(500).json({ success: false, message: 'Server error' });
                             } else {
                                 res.status(200).json({ success: true, message: 'Registration successful' });
+                                // create table contain user buy order and sell order detail
                                 db.query(
                                     "CREATE TABLE IF NOT EXISTS " + username + " (TradeID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, Price INT NOT NULL, Amount INT NOT NULL, Total INT NOT NULL, TradeType VARCHAR(255), TradeDate VARCHAR(255), TradeTime VARCHAR(255))"
                                 ), [username] , (err, result) => { console.log(err) };
-    
+                                // create table contain user wallet
+                                db.query(
+                                    "CREATE TABLE IF NOT EXISTS " + username + "_wallet (WalletID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, Money_ballance INT NOT NULL, Crypto_balance INT NOT NULL, WalletAddreess VARCHAR(255) UNIQUE)"
+                                ) , [username], (err, result) => {console.log(err)};
+                                db.query(
+                                    "INSERT INTO " + username +"_wallet (Money_ballance, Crypto_balance, WalletAddreess) VALUES (25000, 10,'0x3877bDcE6d2B6d9Da4D5223dBA63Ad59379fb07A')",
+                                     ((err) => {console.log(err)})
+                                )  
                             }
                         }
                     );
+                   
                 }
             }
         }
@@ -59,13 +72,13 @@ app.post('/signup', (reg, res) => {
 app.post('/login', (reg, res) => {
     const username = reg.body.username;
     const userpassword = reg.body.password;
-
+    // valid login ?
     db.query(
         "SELECT * FROM Authentication WHERE username = ? AND userpassword = ?", 
         [username, userpassword],
         (err, rows ) => {
             if (rows.length == 0) {
-                res.status(200).json({success: false, message: 'false'})
+                res.status(200).json({ message: 'false'})
             }else {
                 res.status(200).json({success: true, message: 'true' }); 
             }
@@ -77,6 +90,7 @@ app.post('/api/data/remove', (reg, res) => {
  
     const index = reg.body.index
     const username = reg.body.username
+    // remove the order from the data base ?
     db.query(
         "DELETE FROM ?? WHERE TradeID = ?",[username, index],
          (err, result) => {
@@ -91,7 +105,9 @@ app.post('/api/data/remove', (reg, res) => {
 })
 
 app.post('/api/usertrade/data', (reg, res) => {
-    const username = reg.body.username
+    // const username = reg.body.username
+    const username = reg.body.username;
+    // get the trade data 
     db.query(
         "SELECT * FROM ?? ",[username], (err, result) => {
           res.send(result)
@@ -99,9 +115,6 @@ app.post('/api/usertrade/data', (reg, res) => {
     )
 
 })
-
-
-
 
 app.post('/api/usertrade', (reg, res) => {
 
@@ -114,6 +127,9 @@ app.post('/api/usertrade', (reg, res) => {
     const tradeTime = new Date().toLocaleTimeString();
 
     if( Price != null && Amount != null) {
+
+        // record the order that the user place if completeted ?
+
         db.query(
             "INSERT INTO ?? (Price, Amount, Total, TradeType, TradeDate, TradeTime) VALUES (?,?,?,?,?,?)",
             [username, Price, Amount, total, tradeType, tradeDate, tradeTime],
@@ -127,10 +143,41 @@ app.post('/api/usertrade', (reg, res) => {
             }
         )
     } 
+})
 
+app.post('/api/user/fund', (reg, res) => {
+    const username = reg.body.username;
+    
+    // get the wallet detail
+    db.query(
+        "select * from admin3_wallet;"
+    ), 
+    ((err, result) => {
+        if (err) {
+            console.log(err)
+        }else {
+            res.send(result)
+          
+        }
+    })
+
+})
+
+app.get('/api/get/assestlist', (reg, res) => {
+    db.query(
+        "SELECT * FROM assest_list",
+        (err, result) => {
+            if (err) {
+                res.status(200).json({success: false, message: 'false'})
+            }else {
+                res.send(result)
+            }
+        }
+    ) 
 
 
 })
+
 
 app.listen(3002, () => {
     console.log("server is running")
@@ -141,6 +188,54 @@ app.listen(3002, () => {
         if (err){
             console.log(err);
         }else{
+            console.log(result)
+        }
+    }
+
+    db.query(
+        "CREATE DATABASE IF NOT EXISTS inno;"
+    ), (err, result) => {
+        if (err){
+            console.log(err);
+        }else {
+            console.log(result)
+        }
+    }
+
+    db.query(
+        "CREATE TABLE IF NOT EXISTS assest_list(Assest_ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, assest_name VARCHAR(255) NOT NULL, assest_price DOUBLE NOT NULL, assest_change VARCHAR(255) NOT NULL, assest_change_values VARCHAR(255) NOT NULL )"
+    ), (err, result) => {
+        if (err){
+            console.log(err);
+        }else {
+            console.log(result)
+        }
+    }
+
+    db.query(
+        `INSERT INTO assest_list (assest_name, assest_price, assest_change, assest_change_values) 
+        VALUES 
+        ('BTC', 26000, '-', '10%'),
+        ('ETH', 1634, '-', '10%'),
+        ('USDT', 0.99, '+', '0.07%'),
+        ('BNB', 213.1, '-', '9.95%'),
+        ('XRP', 0.52, '-', '14.32%'),
+        ('USDC', 0.99, '-','0.01%'),
+        ('ADA', 0.26, '-','8.05%'),
+        ('DOGE', 0.06, '-','11.46%'),
+        ('SOL', 20.66, '-','13.26%'),
+        ('TRX', 0.08, '-','0.73%'),
+        ('DOT', 4, '-','8.63%'),
+        ('DAI', 1, '+','0.04%'),
+        ('MATIC', 0.55, '-','13.87%'),
+        ('TON', 1.4, '-','5.7%'),
+        ('SHIB', 0, '-', '18.91%'),
+        ('LTC', 64.9, '-', '18.14%'),
+        ('WBTC', 26032, '-', '10.82%');`
+    ), (err, result) => {
+        if (err){
+            console.log(err);
+        }else {
             console.log(result)
         }
     }
