@@ -51,14 +51,6 @@ app.post('/signup', (reg, res) => {
                                 db.query(
                                     "CREATE TABLE IF NOT EXISTS " + username + " (TradeID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, Price INT NOT NULL, Amount INT NOT NULL, Total INT NOT NULL, TradeType VARCHAR(255), TradeDate VARCHAR(255), TradeTime VARCHAR(255))"
                                 ), [username] , (err, result) => { console.log(err) };
-                                // create table contain user wallet
-                                db.query(
-                                    "CREATE TABLE IF NOT EXISTS " + username + "_wallet (WalletID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, Money_ballance INT NOT NULL, Crypto_balance INT NOT NULL, WalletAddreess VARCHAR(255) UNIQUE)"
-                                ) , [username], (err, result) => {console.log(err)};
-                                db.query(
-                                    "INSERT INTO " + username +"_wallet (Money_ballance, Crypto_balance, WalletAddreess) VALUES (25000, 10,'0x3877bDcE6d2B6d9Da4D5223dBA63Ad59379fb07A')",
-                                     ((err) => {console.log(err)})
-                                )  
                             }
                         }
                     );
@@ -145,23 +137,6 @@ app.post('/api/usertrade', (reg, res) => {
     } 
 })
 
-app.post('/api/user/fund', (reg, res) => {
-    const username = reg.body.username;
-    
-    // get the wallet detail
-    db.query(
-        "select * from admin3_wallet;"
-    ), 
-    ((err, result) => {
-        if (err) {
-            console.log(err)
-        }else {
-            res.send(result)
-          
-        }
-    })
-
-})
 
 app.get('/api/get/assestlist', (reg, res) => {
     db.query(

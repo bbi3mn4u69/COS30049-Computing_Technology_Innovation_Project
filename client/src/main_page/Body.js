@@ -87,8 +87,9 @@ class Body extends React.Component {
   
   componentDidMount() {
     console.log('a')
+    console.log(this.state.data)
     const cryptos = ['ETH', 'BTC'];
-    const headers = ['AC44A213-DA26-47B5-8A54-7F904856E874','F15052E5-AC77-4D44-A79B-E76ABCF72A3B'];
+    const headers = ['34F2DF1B-7064-4C52-9905-B255B83C4C84','5E028FC6-8873-4491-9BD6-770C9E9A61F1'];
 
     const requests = cryptos.map((crypto, index) => this.fetchData(crypto, headers[index]));
 

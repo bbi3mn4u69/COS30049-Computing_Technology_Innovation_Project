@@ -29,6 +29,10 @@ const FundTable = () => {
   useEffect(() => {
     init()
     console.log(balanceEther)
+  }, []);
+  
+  useEffect(() => {
+    console.log(balanceEther); // Log the updated balance here
   }, [balanceEther]);
 
 

@@ -28,9 +28,6 @@ function Trading() {
     setHighlighted(table_number);
   };
 
-
-  
-
   const numRows = 20; // Number of rows
 
   return (
@@ -63,37 +60,33 @@ function Trading() {
 const TableComponent = ({ selectTable }) => {
   const url = "http://localhost:3002/api/usertrade/data";
 
-
- const [data, setData] = useState([]);
-  const [data1, setData1] = useState(null);
+  const [data, setData] = useState([]);
   const [data2, setData2] = useState(null);
-   const username = localStorage.getItem('username')
-
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     const fetchData = async () => {
+      const url2 =
+        "https://rest.coinapi.io/v1/trades/BITSTAMP_SPOT_ETH_USD/history?time_start=2023-09-14T00:00:00";
+      const headers = {
+        "X-CoinAPI-Key": "75EB34BD-EF41-4F29-9340-D309DFF1240A",
+      };
 
-      const url2 = 'https://rest.coinapi.io/v1/trades/BITSTAMP_SPOT_ETH_USD/history?time_start=2023-09-14T00:00:00';
-      const headers = {'X-CoinAPI-Key': '75EB34BD-EF41-4F29-9340-D309DFF1240A'};
-
-      const response = await fetch(url2, {method: "GET", headers: headers});
+      const response = await fetch(url2, { method: "GET", headers: headers });
       const json = await response.json();
-      setData2(json)
+      setData2(json);
     };
-  
     fetchData();
-  }, []); 
+  }, []);
 
   console.log(data2)
-      useEffect(() => {
-      Axios.post(url, { username: username }).then((response) => {
-        setData(response.data);
-      });
-    }, [data]);
-
+  useEffect(() => {
+    Axios.post(url, { username: username }).then((response) => {
+      setData(response.data);
+    });
+  }, []);
 
   switch (selectTable) {
-
     default:
       return (
         <div className="overflow-y-auto h-300 overflow-x-hidden grid grid-cols-12">
@@ -109,38 +102,26 @@ const TableComponent = ({ selectTable }) => {
               </tr>
             </thead>
             <tbody className="text-left ml-3 uppercase font-light w-auto text-black">
-              {
-
-                data2 ?
-                data2.map((i) => {
-                  return (
-                    <tr className="px-0 text-left text-black">
-                      <th>
-                        {i.price}
-                      </th>
-                      <td>
-                        {i.size}
-                      </td>
-                      <td>
-                        {i.time_exchange}
-                      </td>
-                    </tr>
-                  );
-                }) :
-                null
-              }
-
+              {data2
+                ? data2.map((i) => {
+                    return (
+                      <tr className="px-0 text-left text-black text-sm">
+                        <td>{i.price}</td>
+                        <td>{i.size}</td>
+                        <td>{i.time_exchange.substring(11).substring(0,8)}</td>
+                      </tr>
+                    );
+                  })
+                : null}
             </tbody>
           </table>
         </div>
       );
-    /*
     case 2:
-
       return (
         <div className="overflow-y-auto overflow-x-hidden grid grid-cols-12 h-300">
           <table
-            className="table-fixed w-full h-fit  ml-5 col-start-2 col-span-11 h-fit "
+            className="table-fixed w-full h-fit  ml-5 col-start-2 col-span-11 "
             id="randomTable"
           >
             <thead>
@@ -150,29 +131,22 @@ const TableComponent = ({ selectTable }) => {
                 <th className="pt-2 m-3 text-sm">Time</th>
               </tr>
             </thead>
-            <tbody className="text-left ml-3 text-black uppercase font-light">
-                           { data ?
-              data.map((i) => {
-                return (
-                  <tr className="px-0 text-left">
-                    <td>
-                      {i.Price}
-                    </td>
-                    <td>
-                      {i.Amount}
-                    </td>
-                    <td>
-                      {i.TradeTime}
-                    </td>
-                  </tr>
-                );
-              }) 
-              : null
-            }
+            <tbody className="text-left ml-3 text-black w-auto uppercase font-light">
+              {data
+                ? data.map((i) => {
+                    return (
+                      <tr className="px-0 text-left">
+                        <td>{i.Price}</td>
+                        <td>{i.Amount}</td>
+                        <td>{i.TradeTime}</td>
+                      </tr>
+                    );
+                  })
+                : null}
             </tbody>
           </table>
         </div>
-      );*/
+      );
   }
 };
 export default Trading;

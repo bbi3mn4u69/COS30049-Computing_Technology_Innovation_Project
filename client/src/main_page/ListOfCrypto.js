@@ -16,7 +16,6 @@ function Star({ value, data, setData }) {
     const [starredItem] = updatedData.splice(index, 1);
     updatedData.unshift(starredItem);
     setData(updatedData)
-    
   };
 
   return (
@@ -49,7 +48,7 @@ function Star({ value, data, setData }) {
   );
 }
 
-function ListOfCrypto({ data }) {
+function L({ data }) {
   function filterData(data) {
     // Get today's date in the format "YYYY-MM-DD"
     let today = new Date();
@@ -70,8 +69,9 @@ function ListOfCrypto({ data }) {
     }
     return filteredData;
   }
-
   data = filterData(data)
+}
+ 
   
 
 function ListOfCrypto() {
@@ -157,19 +157,21 @@ function ListOfCrypto() {
                       return (
                         <tr>
                           <td className="flex flex-row space-x-1">
-                               <Star value={val.Assest_ID} data={data} setData={setData} />  
+                               <Star value={val.Assest_ID} data={data1} setData={setData} />  
                             <div>{val.assest_name}</div>
                           </td>
-                   {data.map((row, index) => (
-
-                    <td>{row.close}</td>
-                    <td className={row.changeClass}>{row.change_percent}</td>
-            ))}
                         </tr>
-                      );
-                    }
+
+                  )}
                   })
               : null}
+               {/* { {data.map((row, index) => {
+                      return(
+                      <td>{row.close}</td>
+                      <td className={row.changeClass}>{row.change_percent}</td>
+                    )
+                  })
+                } } */}
 
           </tbody>
 
