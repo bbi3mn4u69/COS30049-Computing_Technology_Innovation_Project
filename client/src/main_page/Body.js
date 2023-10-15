@@ -7,7 +7,7 @@ import ListOfCrypto from "./ListOfCrypto";
 import TradingSection from "./trading";
 import Coininfor from "./Crypto";
 import OrderHistory from "./OrderHistory";
-
+import { useAuth } from "../context/context";
 
 import React from 'react';
 import pLimit from 'p-limit';
@@ -21,12 +21,12 @@ class Body extends React.Component {
   }
 
   fetchData = async (crypto, header) => {
-    var url = `https://rest.coinapi.io/v1/ohlcv/BITSTAMP_SPOT_${crypto}_USD/history?period_id=1DAY&time_start=2023-10-12T00:00:00`;
+    var url = `https://rest.coinapi.io/v1/ohlcv/BITSTAMP_SPOT_${crypto}_USD/history?period_id=1DAY&time_start=2023-08-15T00:00:00`;
     var headers = {'X-CoinAPI-Key': header};
   
     const response = await fetch(url, {method: "GET", headers: headers});
     const json = await response.json();
-  
+      
     let newData = json.map((item, index) => {
       if (index === 0) return; // skip the first item
   
@@ -38,6 +38,7 @@ class Body extends React.Component {
       const open_yest = json[index - 1].price_open;
       const vol_yest = json[index - 1].volume_traded;
   
+     
       const close = item.price_close;
       const high = item.price_high;
       const low = item.price_low;
@@ -78,7 +79,7 @@ class Body extends React.Component {
         changeClass: change_percent < 0 ? 'text-red-500' : 'text-green-500'
       };
     });
-  
+
     // remove the first undefined element
     newData.shift();
   
@@ -86,17 +87,18 @@ class Body extends React.Component {
   };
   
   componentDidMount() {
-    console.log('a')
-    console.log(this.state.data)
-    const cryptos = ['ETH', 'BTC'];
-    const headers = ['34F2DF1B-7064-4C52-9905-B255B83C4C84','5E028FC6-8873-4491-9BD6-770C9E9A61F1'];
+    const cryptos = ['ETH'];
+    const headers = ['D87B93FB-B63D-4906-A4DC-0807B835DA89'];
 
     const requests = cryptos.map((crypto, index) => this.fetchData(crypto, headers[index]));
 
-
     Promise.all(requests)
-      .then(newData => {
-        this.setState({ data: newData.flat() }); // flatten the array of arrays
+      .then((newData) => {
+        if(newData !== null) {
+          this.setState({ data: newData.flat() }); // flatten the array of arrays
+          console.log(this.state.data)
+        } 
+       
       })
       .catch(error => console.error('Error:', error));
   }

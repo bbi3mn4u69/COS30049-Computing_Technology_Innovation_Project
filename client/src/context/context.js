@@ -11,7 +11,7 @@ export function AuthProvider(props) {
     const [username, setUserName] = useState('')
     const value = {
         isLogin, setIslogin,
-        username, setUserName
+        username, setUserName,
     }
     return(
         <AuthContext.Provider value={value}> {props.children} </AuthContext.Provider>

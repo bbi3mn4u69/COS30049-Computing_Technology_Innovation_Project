@@ -1,29 +1,26 @@
-
-import React, {useState, useEffect} from "react";
-import pLimit from 'p-limit';
+import React, { useState, useEffect } from "react";
+import pLimit from "p-limit";
 
 import Axios from "axios";
 
 function Star({ value, data, setData }) {
   const [hilighted, setHilighted] = useState(false);
-  
 
   const HandleStarClick = (id) => {
-
     const updatedData = [...data];
     const index = data.findIndex((item) => item.Assest_ID === id);
-    console.log(index)
+    console.log(index);
     const [starredItem] = updatedData.splice(index, 1);
     updatedData.unshift(starredItem);
-    setData(updatedData)
+    setData(updatedData);
   };
 
   return (
     <button
       onClick={() => {
-        HandleStarClick(value)
+        HandleStarClick(value);
 
-        hilighted ? setHilighted(true) : setHilighted(false)
+        hilighted ? setHilighted(true) : setHilighted(false);
       }}
     >
       <svg
@@ -48,33 +45,28 @@ function Star({ value, data, setData }) {
   );
 }
 
-function L({ data }) {
+function ListOfCrypto({ data }) {
   function filterData(data) {
     // Get today's date in the format "YYYY-MM-DD"
     let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
     let yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd + 'T00:00:00.0000000Z';
-    
+    today = yyyy + "-" + mm + "-" + dd + "T00:00:00.0000000Z";
 
     // Filter the data
     let filteredData = [];
     let pairs = new Set();
     for (let i = 0; i < data.length; i++) {
-        if (data[i].date === today && !pairs.has(data[i].pair)) {
-            filteredData.push(data[i]);
-            pairs.add(data[i].pair);
-        }
+      if (data[i].date === today && !pairs.has(data[i].pair)) {
+        filteredData.push(data[i]);
+        pairs.add(data[i].pair);
+      }
     }
     return filteredData;
   }
-  data = filterData(data)
-}
- 
-  
+  data = filterData(data);
 
-function ListOfCrypto() {
   const [data1, setData] = useState([]);
   const [search, setSearch] = useState("");
   const url = "http://localhost:3002/api/get/assestlist";
@@ -157,28 +149,32 @@ function ListOfCrypto() {
                       return (
                         <tr>
                           <td className="flex flex-row space-x-1">
-                               <Star value={val.Assest_ID} data={data1} setData={setData} />  
+                            <Star
+                              value={val.Assest_ID}
+                              data={data1}
+                              setData={setData}
+                            />
                             <div>{val.assest_name}</div>
                           </td>
+                          {data.map((row, index) => {
+                            return <td>{row.close}</td>;
+                          })
+                          }
+                           {data.map((row) => {
+                            console.log(data)
+                              return(
+                                <td>{row.change_percent}</td>
+                              )
+                            })}
                         </tr>
-
-                  )}
+                      );
+                    }
                   })
               : null}
-               {/* { {data.map((row, index) => {
-                      return(
-                      <td>{row.close}</td>
-                      <td className={row.changeClass}>{row.change_percent}</td>
-                    )
-                  })
-                } } */}
-
           </tbody>
-
         </table>
       </div>
     </div>
   );
 }
 export default ListOfCrypto;
-
