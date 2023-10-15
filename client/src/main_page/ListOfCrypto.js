@@ -45,27 +45,8 @@ function Star({ value, data, setData }) {
   );
 }
 
-function ListOfCrypto({ data }) {
-  function filterData(data) {
-    // Get today's date in the format "YYYY-MM-DD"
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, "0");
-    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    let yyyy = today.getFullYear();
-    today = yyyy + "-" + mm + "-" + dd + "T00:00:00.0000000Z";
+function ListOfCrypto() {
 
-    // Filter the data
-    let filteredData = [];
-    let pairs = new Set();
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].date === today && !pairs.has(data[i].pair)) {
-        filteredData.push(data[i]);
-        pairs.add(data[i].pair);
-      }
-    }
-    return filteredData;
-  }
-  data = filterData(data);
 
   const [data1, setData] = useState([]);
   const [search, setSearch] = useState("");
@@ -156,16 +137,10 @@ function ListOfCrypto({ data }) {
                             />
                             <div>{val.assest_name}</div>
                           </td>
-                          {data.map((row, index) => {
-                            return <td>{row.close}</td>;
-                          })
-                          }
-                           {data.map((row) => {
-                            console.log(data)
-                              return(
-                                <td>{row.change_percent}</td>
-                              )
-                            })}
+                          <td>${val.assest_price}</td>
+                          <td className={`${
+                            change ? "text-green-500" : "text-red-500"
+                          }`}>{val.assest_change}{val.assest_change_values}</td>
                         </tr>
                       );
                     }

@@ -35,7 +35,7 @@ app.post('/signup', (reg, res) => {
             } else {
                 if (rows.length > 0) {
                     // Username already exists
-                    res.status(500).json({ success: false, message: 'same username' });
+                    res.status(200).json({ success: false, message: 'same username' });
                 } else {
                     // Username is unique, proceed with INSERT
                     db.query(
@@ -60,6 +60,9 @@ app.post('/signup', (reg, res) => {
         }
     );
 })
+
+
+
 
 app.post('/login', (reg, res) => {
     const username = reg.body.username;
@@ -187,18 +190,7 @@ app.listen(3002, () => {
         }
     }
 
-    db.query(
-        `INSERT INTO assest_list (assest_name, assest_price, assest_change, assest_change_values) 
-        VALUES 
-        ('BTC', 26000, '-', '10%'),
-        ('ETH', 1634, '-', '10%')`
-    ), (err, result) => {
-        if (err){
-            console.log(err);
-        }else {
-            console.log(result)
-        }
-    }
+
 
 })
     

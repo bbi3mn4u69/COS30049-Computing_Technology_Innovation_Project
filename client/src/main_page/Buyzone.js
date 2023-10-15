@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Axios  from "axios";
+import Axios from "axios";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/context";
 import web3 from "../shared_component/web3";
@@ -8,16 +8,19 @@ import contract_properties from "./contract_properties.json";
 function BuyZone() {
   const url = "http://localhost:3002/api/usertrade";
   const [empty, setEmpty] = useState("");
-  const username = localStorage.getItem("username")
-  const [buyPrice, setBuyPrice] = useState ("");
-  const [buyAmount, setBuyAmount] = useState ("");
+  const username = localStorage.getItem("username");
+  const [buyPrice, setBuyPrice] = useState("");
+  const [buyAmount, setBuyAmount] = useState("");
   const tradeType = "BUY";
 
   const Smart_contract = async () => {
-    const contractAddress = '0x0092162D5a4568eC32dA3Ad6760b86d25C6605f8';
+    const contractAddress = "0x4c2BB361E1f9Ec451f0f61cc8BC2E8eb1D670176";
     // Create a contract instance
-    const contract = new web3.eth.Contract(contract_properties.abi, contractAddress);
-    console.log(contract_properties)
+    const contract = new web3.eth.Contract(
+      contract_properties.abi,
+      contractAddress
+    );
+    console.log(contract_properties);
     console.log(contract);
     const addresses = await web3.eth.getAccounts();
 
@@ -25,47 +28,50 @@ function BuyZone() {
     try {
       await contract.methods.addUser(username).send({
         from: addresses[0],
-        gasLimit: 999999
+        gasLimit: 999999,
       });
       await contract.methods.addTransact(buyPrice, buyAmount, tradeType).send({
         from: addresses[0],
-        gasLimit: 999999
+        gasLimit: 999999,
       });
       await contract.methods.buyToken().send({
         from: addresses[1],
         to: addresses[0],
-        value: web3.utils.toWei(buyAmount.toString(), 'ether'),
-        gasLimit: 999999
+        value: web3.utils.toWei(buyAmount.toString(), "ether"),
+        gasLimit: 999999,
       });
-    } catch(error) {
-      console.error("Smart contract method call failed:", error);
-    }
-  }
-
+    } catch (error) {
+        console.log(error)
+        console.error("Smart contract method call failed:", error);
+      }
+  };
 
   const buttonHandle = () => {
+    //initiate smart contract operation (only when order successful)
+    Smart_contract();
     if (buyPrice !== null && buyAmount !== null) {
-      Axios.post(url, {Price: buyPrice, Amount: buyAmount, tradeType:tradeType, username: username}).
-      then((response) => {
+      Axios.post(url, {
+        Price: buyPrice,
+        Amount: buyAmount,
+        tradeType: tradeType,
+        username: username,
+      }).then((response) => {
         if (response.data.success === true) {
-          toast.success('order place successful!', {
-            position: 'top-right',
+          toast.success("order place successful!", {
+            position: "top-right",
             autoClose: 3000,
           });
-          //initiate smart contract operation (only when order successful)
-          Smart_contract()
-        }else {
-          toast.success('order has fail!', {
-            position: 'top-right',
+        } else {
+          toast.error("order has fail!", {
+            position: "top-right",
             autoClose: 3000,
           });
         }
       })
       console.log(username);
-      setEmpty("")
+      setEmpty("");
     }
-  }
-
+  };
 
   return (
     <div className="md:p-0 md:m-0 col-span-4 sm:col-span-6">
@@ -73,8 +79,10 @@ function BuyZone() {
       <div className="my-3">
         <div>
           <input
-            required 
-            onChange={(e) => {setBuyAmount(e.target.value)}}
+            required
+            onChange={(e) => {
+              setBuyAmount(e.target.value);
+            }}
             // value={empty}
             name="amount"
             type="number"
@@ -91,7 +99,9 @@ function BuyZone() {
         <div>
           <input
             required
-            onChange={(e) => { setBuyPrice(e.target.value)}}
+            onChange={(e) => {
+              setBuyPrice(e.target.value);
+            }}
             // value={empty}
             name="price"
             type="number"

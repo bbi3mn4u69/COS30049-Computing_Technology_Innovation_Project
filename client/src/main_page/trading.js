@@ -79,12 +79,11 @@ const TableComponent = ({ selectTable }) => {
     fetchData();
   }, []);
 
-  console.log(data2)
   useEffect(() => {
     Axios.post(url, { username: username }).then((response) => {
       setData(response.data);
     });
-  }, []);
+  }, [data]);
 
   switch (selectTable) {
     default:

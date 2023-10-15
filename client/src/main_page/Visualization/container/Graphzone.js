@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import data from "../data/data.csv";
 import Chart from './Chart';
 import "../styles/styles.css";
 
 const GraphArea = (props) => {
-  
   const [data, setData] = useState([]);
   const [chartWidth, setChartWidth] = useState(0);
   const chartContainerRef = useRef(null);
@@ -39,10 +37,16 @@ const GraphArea = (props) => {
 
     handleResize(); // Initial resizing
 
+    const interval = setInterval(() => {
+      const updatedData = formatData(props.data);
+      setData(updatedData);
+    }, 100); // 2 minutes in milliseconds
+
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      clearInterval(interval);
     };
   }, [props.data]);
 
@@ -67,4 +71,3 @@ const GraphArea = (props) => {
 };
 
 export default GraphArea;
-

@@ -30,6 +30,11 @@ function SignUp() {
               position: "top-right",
               autoClose: 3000,
             });
+          } if (response.data.message === "same username") {
+            toast.error("Same username, please try again", {
+              position: "top-right",
+              autoClose: 3000,
+            });
           }
         }
       );

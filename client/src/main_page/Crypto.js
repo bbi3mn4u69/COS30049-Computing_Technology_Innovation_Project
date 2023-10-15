@@ -75,9 +75,9 @@ function Crypto( {data} ) {
           flex flex-col"
           >
             {/* current price of that crypto */}
-            <div className={`${selectedCoin.changeClass} text-left`}>1,853.81</div>
+            <div className={`${selectedCoin.changeClass} text-left`}>{selectedCoin.close}</div>
             {/* current price of that crypto */}
-            <div className="text-black block text-left">$1,853.18</div>
+            <div className="text-black block text-left">{selectedCoin.open}</div>
           </div>
           <div className="md:flex md:flex-col md:space-y-1 md:visible hidden">
             {/* 24h change */}

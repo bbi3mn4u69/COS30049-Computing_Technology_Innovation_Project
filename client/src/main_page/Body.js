@@ -1,3 +1,5 @@
+import React from 'react';
+import pLimit from 'p-limit';
 import BuyArea from "./Buyzone";
 import SellArea from "./Sellzone";
 import GraphArea from "./Visualization/container/Graphzone";
@@ -8,9 +10,6 @@ import TradingSection from "./trading";
 import Coininfor from "./Crypto";
 import OrderHistory from "./OrderHistory";
 import { useAuth } from "../context/context";
-
-import React from 'react';
-import pLimit from 'p-limit';
 
 class Body extends React.Component {
   constructor(props) {
@@ -92,6 +91,7 @@ class Body extends React.Component {
 
     const requests = cryptos.map((crypto, index) => this.fetchData(crypto, headers[index]));
 
+    // Fetch data initially
     Promise.all(requests)
       .then((newData) => {
         if(newData !== null) {
@@ -101,6 +101,24 @@ class Body extends React.Component {
        
       })
       .catch(error => console.error('Error:', error));
+
+    // Refresh data every 1 minute
+    this.interval = setInterval(() => {
+      Promise.all(requests)
+        .then((newData) => {
+          if(newData !== null) {
+            this.setState({ data: newData.flat() }); // flatten the array of arrays
+            console.log(this.state.data)
+          } 
+         
+        })
+        .catch(error => console.error('Error:', error));
+    }, 100000); // 10 minute in milliseconds
+  }
+
+  componentWillUnmount() {
+    // Clear the interval when the component is unmounted
+    clearInterval(this.interval);
   }
 
   render() {
