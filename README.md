@@ -1,5 +1,5 @@
-# this project created by react app and node js
-# This is the project about crypto currentcy exchange; decentrailizization platform
+# This project created by react app and node js
+# This is the project about crypto currency exchange; decentralization platform
 
 contribution thanks to @nguyen_linh_bao; @pham_nguyen_quang_huy; @ngo_the_son; @chung_yi
 
