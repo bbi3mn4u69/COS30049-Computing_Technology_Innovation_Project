@@ -19,6 +19,7 @@ function SignUp() {
         (response) => {
           console.log(response);
           if (response.data.success) {
+            console.log(response)
             // Show a success toast notification
             toast.success("Registration successful!", {
               position: "top-right",

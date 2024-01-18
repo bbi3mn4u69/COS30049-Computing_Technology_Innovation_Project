@@ -87,7 +87,7 @@ class Body extends React.Component {
   
   componentDidMount() {
     const cryptos = ['ETH'];
-    const headers = ['D87B93FB-B63D-4906-A4DC-0807B835DA89'];
+    const headers = ['0CD4CE9F-E540-4E30-BAB1-12A71C53BBBC'];
 
     const requests = cryptos.map((crypto, index) => this.fetchData(crypto, headers[index]));
 
@@ -96,7 +96,6 @@ class Body extends React.Component {
       .then((newData) => {
         if(newData !== null) {
           this.setState({ data: newData.flat() }); // flatten the array of arrays
-          console.log(this.state.data)
         } 
        
       })
@@ -108,7 +107,6 @@ class Body extends React.Component {
         .then((newData) => {
           if(newData !== null) {
             this.setState({ data: newData.flat() }); // flatten the array of arrays
-            console.log(this.state.data)
           } 
          
         })

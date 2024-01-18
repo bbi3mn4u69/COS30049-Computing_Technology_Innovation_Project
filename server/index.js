@@ -122,9 +122,7 @@ app.post('/api/usertrade', (reg, res) => {
     const tradeTime = new Date().toLocaleTimeString();
 
     if( Price != null && Amount != null) {
-
         // record the order that the user place if completeted ?
-
         db.query(
             "INSERT INTO ?? (Price, Amount, Total, TradeType, TradeDate, TradeTime) VALUES (?,?,?,?,?,?)",
             [username, Price, Amount, total, tradeType, tradeDate, tradeTime],
@@ -132,7 +130,6 @@ app.post('/api/usertrade', (reg, res) => {
                 if (err) {
                     res.status(200).json({success: false, message: 'false'})
                 }else {
-                    console.log(err)
                     res.status(200).json({ success: true, message: 'true' })
                 }
             }

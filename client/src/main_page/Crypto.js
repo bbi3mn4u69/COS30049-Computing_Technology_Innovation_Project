@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 function Crypto( {data} ) {
-  console.log(data)
   function filterData(data) {
     // Get today's date in the format "YYYY-MM-DD"
     let today = new Date();
