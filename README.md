@@ -1,6 +1,6 @@
 # Full Stach Trading Platform with React, Tailwinds, Nodejs, D3js chart and Solidity smart contract
 
-![Octocat](https://user-images.githubusercontent.com/81953271/124010886-b571ca80-d9df-11eb-86ac-b358c48ac6aa.png "Github logo")
+![Octocat](https://user-images.githubusercontent.com/81953271/124010886-b571ca80-d9df-11eb-86ac-b358c48ac6aa.png Github logo)
 
 ---
 
@@ -28,9 +28,9 @@ features:
 # Clone the repository
 
 ```
-function test() {
-  console.log("git clone https://github.com/bbi3mn4u69/COS30049-Computing_Technology_Innovation_Project.git");
-}
+
+git clone https://github.com/bbi3mn4u69/COS30049-Computing_Technology_Innovation_Project.git
+
 ```
 
 ---
@@ -38,9 +38,8 @@ function test() {
 # Install packages
 
 ```
-function test() {
-  console.log("npm i");
-}
+npm i
+
 ```
 
 ---
@@ -54,15 +53,15 @@ function test() {
 ## Truffle, Ethereum development framework
 
 ```
-function test() {
-  console.log("sudo npm install -g truffle@5.0.2");
-}
+
+sudo npm install -g truffle@5.0.2
+
 ```
 
 ```
-function test() {
-  console.log("truffle init");
-}
+
+truffle init
+
 ```
 
 - Set up new workspace on Ganache using truffle-config.js file
@@ -70,45 +69,45 @@ function test() {
 ## Compile the smart contract
 
 ```
-function test() {
-  console.log("truffle compile");
-}
+
+truffle compile
+
 ```
 
 ## Deploy the smart contract
 
 ```
-function test() {
-  console.log("truffle migrate");
-}
+
+truffle migrate
+
 ```
 
 ## Client side
 
 ```
-function test() {
-  console.log("cd client");
-}
+
+cd client
+
 ```
 
 ```
-function test() {
-  console.log("npm start");
-}
+
+npm start
+
 ```
 
 ## Server side
 
 ```
-function test() {
-  console.log("cd server");
-}
+
+cd server
+
 ```
 
 ```
-function test() {
-  console.log("npm start");
-}
+
+npm start
+
 ```
 
 ---
