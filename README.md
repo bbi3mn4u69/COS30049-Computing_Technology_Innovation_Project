@@ -7,6 +7,12 @@
 this is a repository for a full stack trading platform with React, Nodejs, D3js chart and Solidity smart contract
 
 features:
+* Item 1
+* Item 2
+  * Item 1a
+  * Item 2a
+     * Item 1b
+     * Item 2b
 _ Tailwind design
 _ Tailwind animation and effect
 _ Full responsive
