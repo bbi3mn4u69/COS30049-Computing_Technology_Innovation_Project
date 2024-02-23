@@ -46,11 +46,11 @@ npm i
 
 # Start the development mode
 
-## Install Ganache software
+### Install Ganache software
 
 - https://trufflesuite.com/ganache/
 
-## Truffle, Ethereum development framework
+### Truffle, Ethereum development framework
 
 ```
 
@@ -66,7 +66,7 @@ truffle init
 
 - Set up new workspace on Ganache using truffle-config.js file
 
-## Compile the smart contract
+### Compile the smart contract
 
 ```
 
@@ -74,7 +74,7 @@ truffle compile
 
 ```
 
-## Deploy the smart contract
+### Deploy the smart contract
 
 ```
 
@@ -82,7 +82,7 @@ truffle migrate
 
 ```
 
-## Client side
+### Client side
 
 ```
 
@@ -96,7 +96,7 @@ npm start
 
 ```
 
-## Server side
+### Server side
 
 ```
 
