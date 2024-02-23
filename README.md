@@ -1,7 +1,9 @@
 # Full Stach Trading Platform with React, Tailwinds, Nodejs, D3js chart and Solidity smart contract
 
-![Octocat](https://user-images.githubusercontent.com/81953271/124010886-b571ca80-d9df-11eb-86ac-b358c48ac6aa.png "Github logo") 
-
+![Trading Platform](image1.png "Github logo") 
+![Trading Platform](image2.png "Github logo") 
+![Trading Platform](image3.png "Github logo") 
+![Trading Platform](image4.png "Github logo") 
 ---
 
 this is a repository for a full stack trading platform with React, Nodejs, D3js chart and Solidity smart contract
