@@ -47,8 +47,7 @@ function BuyZone() {
   };
 
   const buttonHandle = () => {
-    //initiate smart contract operation (only when order successful)
-    Smart_contract();
+
     if (buyPrice !== null && buyAmount !== null) {
       Axios.post(url, {
         Price: buyPrice,
