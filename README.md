@@ -7,27 +7,21 @@
 this is a repository for a full stack trading platform with React, Nodejs, D3js chart and Solidity smart contract
 
 features:
-* Item 1
-* Item 2
-  * Item 1a
-  * Item 2a
-     * Item 1b
-     * Item 2b
-_ Tailwind design
-_ Tailwind animation and effect
-_ Full responsive
-_ Credential authentication
-_ Search and filter functionality
-_ Smart contract
-_ Buying and Selling
-_ Error handling with React Toast
-_ Featured crypto currentcy based on user interest
-_ D3 candlestick chart
-_ Crypto price on hover graph (tooltips)
-_ API design
-_ Transaction history
-_ Update user transaction to block chain with smart contract from blockchain 
-_ Update user crypto currentcy ballance with smart contract from blockchain
+
+* Tailwind animation and effect
+* Full responsive
+* Credential authentication
+* Search and filter functionality
+* Smart contract
+* Buying and Selling
+* Error handling with React Toast
+* Featured crypto currentcy based on user interest
+* D3 candlestick chart
+* Crypto price on hover graph (tooltips)
+* API design
+* Transaction history
+* Update user transaction to block chain with smart contract from blockchain 
+* Update user crypto currentcy ballance with smart contract from blockchain
 
 ---
 
