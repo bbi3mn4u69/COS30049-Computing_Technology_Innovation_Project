@@ -1,27 +1,27 @@
 # Full Stach Trading Platform with React, Tailwinds, Nodejs, D3js chart and Solidity smart contract
 
-![Octocat](https://user-images.githubusercontent.com/81953271/124010886-b571ca80-d9df-11eb-86ac-b358c48ac6aa.png "Github logo") 
+![Octocat](https://user-images.githubusercontent.com/81953271/124010886-b571ca80-d9df-11eb-86ac-b358c48ac6aa.png "Github logo")
 
 ---
 
 this is a repository for a full stack trading platform with React, Nodejs, D3js chart and Solidity smart contract
 
-feature:
-    * Tailwind design
-    * Tailwind animation and effect
-    * Full responsive
-    * Credential authentication
-    * Search and filter functionality
-    * Smart contract
-    * Buying and Selling
-    * Error handling with React Toast
-    * Featured crypto currentcy based on user interest
-    * D3 candlestick chart
-    * Crypto price on hover graph (tooltips)
-    * API design
-    * Transaction history
-    * Update user transaction to block chain with smart contract from blockchain
-    * Update user crypto currentcy ballance with smart contract from blockchain
+features:
+_ Tailwind design
+_ Tailwind animation and effect
+_ Full responsive
+_ Credential authentication
+_ Search and filter functionality
+_ Smart contract
+_ Buying and Selling
+_ Error handling with React Toast
+_ Featured crypto currentcy based on user interest
+_ D3 candlestick chart
+_ Crypto price on hover graph (tooltips)
+_ API design
+_ Transaction history
+_ Update user transaction to block chain with smart contract from blockchain 
+_ Update user crypto currentcy ballance with smart contract from blockchain
 
 ---
 
@@ -46,7 +46,6 @@ function test() {
 ---
 
 # Start the development mode
-
 
 ## Install Ganache software
 
@@ -115,4 +114,3 @@ function test() {
 ---
 
 # contribution thanks to @nguyen_linh_bao; @pham_nguyen_quang_huy; @ngo_the_son; @chung_yi
-
