@@ -1,6 +1,6 @@
 # Full Stach Trading Platform with React, Tailwinds, Nodejs, D3js chart and Solidity smart contract
 
-![Octocat](https://user-images.githubusercontent.com/81953271/124010886-b571ca80-d9df-11eb-86ac-b358c48ac6aa.png Github logo)
+![Octocat](https://user-images.githubusercontent.com/81953271/124010886-b571ca80-d9df-11eb-86ac-b358c48ac6aa.png "Github logo") 
 
 ---
 
