@@ -1,4 +1,4 @@
-# Full Stach Trading Platform with React, Tailwinds, Nodejs, D3js chart and Solidity smart contract
+# Full Stack Trading Platform with React, Tailwinds, Nodejs, D3js chart and Solidity smart contract
 
 ![Trading Platform](image1.png "Github logo") 
 ![Trading Platform](image2.png "Github logo") 
